@@ -1,0 +1,10 @@
+PBJ - Please Be Jenerous
+A Distributed File Sharing System
+By: Zach Welch, Camden Clements, and Adam Hodges
+------------------------
+
+Dependencies
+------------------------
+PBJ uses wxPython, the python module for wxWidgets (a powerful cross-platform GUI framework).
+In order to run PBJ, wxPython must be installed. For information on downloading wx, see:
+http://www.wxpython.org/download.php
