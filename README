@@ -3,6 +3,36 @@ A Distributed File Sharing System
 By: Zach Welch, Camden Clements, and Adam Hodges
 ------------------------
 
+Project Timeline
+------------------------
+
+Version 0.1
+    - build network of peers/ultrapeers assuming no node will crash
+    - display/monitor network topography using a visual graph
+
+Version 0.2
+    - nodes become actual computers. Nodes still don't crash but can be removed from network
+    - tie in a share directory and gather files on client
+    - develop search algorithm to traverse network from any starting node to search for filename
+
+Version 0.3
+    - design web user interface
+    - extend graphing program to enhance testing (statistics, routetrace,...)
+    - nodes fully scaleable and can crash
+    - fetch found file
+
+Version 0.4
+    - enhance network structure (better algorithms)
+    - extend testing features
+    - enhance user interface
+
+Version 0.5
+    - file descriptions associated with files, search by keyword
+
+Version 1.0
+    - awesomeness
+
+
 Dependencies
 ------------------------
 PBJ uses wxPython, the python module for wxWidgets (a powerful cross-platform GUI framework).
