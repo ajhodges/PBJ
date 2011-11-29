@@ -17,7 +17,7 @@ class Node:
         self.name = name        # name of peer (address)
         self.isUltra = isUltra  # boolean
         self.peers = []         # list of connected peers
-        self.upeers = []        # list of connected ultrapeers
+        self.upeers = {}        # dict of connected ultrapeers
         if(isUltra):
             upeercount = upeercount + 1
             self.upeerid = upeercount
@@ -38,32 +38,31 @@ class Node:
 class Network:
     def __init__(self):
         print "Creating Network."
-        self.root = Node('A', True)
+        self.root = Node('0', True)
 
     def findUPeer(self, up):
         if(len(up.peers) < PEERS_PER_UPEER):
             return up
-        else:
-            for peer in up.upeers:
-                if(peer.upeerid > up.upeerid):
-                    return self.findUPeer(peer)
+        elif up.upeers.keys() != []:
+            if up.upeers[max(up.upeers.keys())].upeerid > up.upeerid:
+                return self.findUPeer(up.upeers[max(up.upeers.keys())])
 
     # doesn't work for more than 4 ultrapeers
     def linkUPeer(self, up):
         curup = self.root
-        i = 0
+        
         while(curup.upeerid != up.upeerid):
+            
             if(math.log((up.upeerid - curup.upeerid), 2) % 2 == 0):
                 print "Linking ultrapeers %d and %d." % (curup.upeerid, up.upeerid)
-                up.upeers.append(curup)
-                curup.upeers.append(up)
-                i=0
+                up.upeers[curup.upeerid - up.upeerid] = curup
+                curup.upeers[up.upeerid - curup.upeerid] = up
+                
             # some how need to traverse ultrapeers sequitially
-            if(curup.upeers[i].upeerid > curup.upeerid):
-                curup = curup.upeers[i]
-                i = i+1
-            else:
-                break            
+            
+            curup = curup.upeers[1]
+
+
 
     def newNode(self, name):
         upeer = self.findUPeer(self.root)
@@ -71,30 +70,39 @@ class Network:
             newnode = Node(name, True)
             self.linkUPeer(newnode)
         else:
+            print "Found upeer ",str(upeer.upeerid)
+
             newnode = Node(name, False)
             upeer.peers.append(newnode)
             print "Node %s added to Ultrapeer %s" % (newnode.name, upeer.upeerid)
+   
+    
     def getRoot(self):
         return self.root
     
     
     def makeSubGraph(self,uPeer,Graph,Visited):
-        print uPeer.getName()
         for subPeer in uPeer.getPeers():
             Graph.add_node(subPeer.getName())
             Graph.add_edge(uPeer.getName(),subPeer.getName())
-        for up in uPeer.getUpeers():
-            if up != []:
-                print Visited
-                print up.getName()
-                if up.getName() in Visited:
-                    pass
-                else:
-                    print " ", up.getName()
-                    Graph.add_node(up.getName())
-                    Graph.add_edge(uPeer.getName(),up.getName())
-                    Visited.append(uPeer.getName())
-                    self.makeSubGraph(up,Graph,Visited)
+        hold = uPeer.getUpeers()
+        if hold != {}:
+            for key in hold.keys():
+                if key > 0:
+                    Graph.add_node(uPeer.upeers[key].getName())
+                    Graph.add_edge(uPeer.getName(),uPeer.upeers[key].getName())
+            if uPeer.upeers.has_key(1):
+                self.makeSubGraph(uPeer.upeers[1],Graph,Visited)
+            
+#            print Visited
+#           print up.getName()
+                #           if up.getName() in Visited:
+#          pass
+                #            else:
+                #         Graph.add_node(up.getName())
+                #       Graph.add_edge(uPeer.getName(),up.getName())
+                #       Visited.append(uPeer.getName())
+#   self.makeSubGraph(up,Graph,Visited)
 
     def makeGraph(self,Graph):
         Graph.add_node(self.root.getName())
@@ -106,23 +114,16 @@ class Network:
 if __name__ == '__main__':
     # create a network and add 10 additional nodes
     n = Network()
-    names = ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K']
-    for i in range(10):
+    names = ['A1', 'A2', 'A3', '1', 'B1', 'B2', 'B3', '2', 'C1', 'C2','C3','3','D1','D2','D3','4','E1','E2','E3','5','F1']
+    for i in range(len(names)):
         n.newNode(names[i])   
     
     G = pgv.AGraph()
     n.makeGraph(G)
     G.layout()
     G.draw('file.png')
+
+    print n.root.upeers
     sys.exit(0)
-'''    G.add_nodes_from(['A','B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'])
- root = n.getRoot()
-    for i in root.getUpeers():
-        G.add_edge(root.getName(),i.getName())
-        for a in root.getPeers():
-            G.add_edge(root.getName(),a.getName())
-        for j in i.getUpeers():
-            G.add_edge(i.getName(),j.getName())
-            for k in j.getPeers():
-                G.add_edge(j.getName(),k.getName())'''
-   
+
+
