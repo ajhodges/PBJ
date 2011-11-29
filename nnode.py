@@ -2,13 +2,23 @@
 # not fully scaleable (see comments below)
 
 import sys
+import os
 import math
 import networkx as nx
 import pygraphviz as pgv 
 
 PEERS_PER_UPEER = 3 # constant
+TIME_TO_LIVE = 7
 
 upeercount = 0    # number of ultrapeers in network
+
+class searchReq:
+    def __init__(self,filename):
+        self.ttl = TIME_TO_LIVE
+        self.filename = filename
+        self.visited = []
+    def addVisit(self,newVisList):
+        self.visited = self.visited + newVisList
 
 class Node:
     def __init__(self, name, isUltra):
@@ -33,7 +43,27 @@ class Node:
         return self.peers
     def getUpeerid(self):
         return self.upeerid
-
+    def checkForFile(self,filename):
+         return os.path.isfile('share/' + filename)
+    def search(self,filename):
+        if checkForFile(filename) == True:
+            #foundfile
+            return
+        for p in self.peers:
+            if p.checkForFile(filename) == True:
+                return
+        req = searchReq(filename)
+        req.addVisit(self.upeers.get_keys())
+        for up in self.upeers.get_keys():
+            pass
+            #send req to upeer
+    def handleSearch(self,req):
+        req.ttl = req.ttl -1
+        if(req.ttl > 0):
+            for up in self.upeers.get_keys():
+                if up not in req.visited:
+                    req.addVisit([up])
+                    #send to up
 
 class Network:
     def __init__(self):
