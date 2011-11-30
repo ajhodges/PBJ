@@ -1,6 +1,6 @@
 import gc
 import unittest
-from _markupsafe import Markup, escape, escape_silent
+from __init__ import Markup, escape, escape_silent
 
 
 class MarkupTestCase(unittest.TestCase):

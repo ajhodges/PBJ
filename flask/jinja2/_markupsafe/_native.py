@@ -8,7 +8,7 @@
     :copyright: (c) 2010 by Armin Ronacher.
     :license: BSD, see LICENSE for more details.
 """
-from _markupsafe import Markup
+from __init__ import Markup
 
 
 def escape(s):
