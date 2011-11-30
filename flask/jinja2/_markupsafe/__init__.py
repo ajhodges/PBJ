@@ -219,7 +219,7 @@ class _MarkupEscapeHelper(object):
 
 # we have to import it down here as the speedups and native
 # modules imports the markup type which is define above.
-try:
-    from _speedups import escape, escape_silent, soft_unicode
-except ImportError:
-    from _native import escape, escape_silent, soft_unicode
+#try:
+#    from _speedups import escape, escape_silent, soft_unicode
+#except ImportError:
+#    from _native import escape, escape_silent, soft_unicode
