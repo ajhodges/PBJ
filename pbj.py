@@ -1,5 +1,7 @@
-import socket
+#import socket
 import pickle
+
+from httpcli import register
 
 GATEWAY_ADDR = 'gecko2.cs.clemson.edu'
 TIME_TO_LIVE = 7
@@ -27,10 +29,11 @@ class Client:
         return string
 
     def connectToNetwork(self):
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        sock.connect((GATEWAY_ADDR, 5555))
-        data = sock.recv(102400)
+#        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+#        sock.connect((GATEWAY_ADDR, 5555))
+#        data = sock.recv(102400)
+        data = register(GATEWAY_ADDR)
         data = pickle.loads(data)
         if data['isUltra']:
             self.isUltra = True

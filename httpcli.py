@@ -42,10 +42,11 @@ def download(filename, url):
     download.close()
 
 def main():
-    #search(1,"wat.txt", "localhost")
-    #report_found(1,"wat.txt", "localhost")
-    #download("wat.txt", "http://127.0.0.1:5000/wat.txt")
-    register("localhost")
+    #--testing functions--
+    #search(1,"hold.txt", "localhost")
+    #report_found(1,"hold.txt", "localhost")
+    #download("hold.txt", "http://127.0.0.1:5000/share/hold.txt")
+    #register("localhost")
 
 if __name__ == "__main__":
     main()
