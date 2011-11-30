@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    jinja2.tests
+    tests
     ~~~~~~~~~~~~
 
     Jinja test functions. Used with the "is" operator.
@@ -9,7 +9,7 @@
     :license: BSD, see LICENSE for more details.
 """
 import re
-from jinja2.runtime import Undefined
+from runtime import Undefined
 
 try:
     from collections import Mapping as MappingType

@@ -17,8 +17,8 @@
 import re
 from operator import itemgetter
 from collections import deque
-from jinja2.exceptions import TemplateSyntaxError
-from jinja2.utils import LRUCache, next
+from exceptions import TemplateSyntaxError
+from utils import LRUCache, next
 
 
 # cache for the lexers. Exists in order to be able to have multiple

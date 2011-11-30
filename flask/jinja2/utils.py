@@ -168,7 +168,7 @@ def is_undefined(obj):
                 return default
             return var
     """
-    from jinja2.runtime import Undefined
+    from runtime import Undefined
     return isinstance(obj, Undefined)
 
 
@@ -184,8 +184,8 @@ def clear_caches():
     the time.  Normally you don't have to care about that but if you are
     messuring memory consumption you may want to clean the caches.
     """
-    from jinja2.environment import _spontaneous_environments
-    from jinja2.lexer import _lexer_cache
+    from environment import _spontaneous_environments
+    from lexer import _lexer_cache
     _spontaneous_environments.clear()
     _lexer_cache.clear()
 
@@ -302,7 +302,7 @@ def urlize(text, trim_url_limit=None, nofollow=False):
 
 def generate_lorem_ipsum(n=5, html=True, min=20, max=100):
     """Generate some lorem impsum for the template."""
-    from jinja2.constants import LOREM_IPSUM_WORDS
+    from constants import LOREM_IPSUM_WORDS
     from random import choice, randrange
     words = LOREM_IPSUM_WORDS.split()
     result = []
@@ -584,7 +584,7 @@ class Joiner(object):
 try:
     from markupsafe import Markup, escape, soft_unicode
 except ImportError:
-    from jinja2._markupsafe import Markup, escape, soft_unicode
+    from _markupsafe import Markup, escape, soft_unicode
 
 
 # partials

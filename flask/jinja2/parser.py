@@ -8,10 +8,10 @@
     :copyright: (c) 2010 by the Jinja Team.
     :license: BSD, see LICENSE for more details.
 """
-from jinja2 import nodes
-from jinja2.exceptions import TemplateSyntaxError, TemplateAssertionError
-from jinja2.utils import next
-from jinja2.lexer import describe_token, describe_token_expr
+import nodes
+from exceptions import TemplateSyntaxError, TemplateAssertionError
+from utils import next
+from lexer import describe_token, describe_token_expr
 
 
 #: statements that callinto 

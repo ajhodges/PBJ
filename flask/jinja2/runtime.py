@@ -9,10 +9,10 @@
     :license: BSD.
 """
 from itertools import chain, imap
-from jinja2.nodes import EvalContext, _context_function_types
-from jinja2.utils import Markup, partial, soft_unicode, escape, missing, \
+from nodes import EvalContext, _context_function_types
+from utils import Markup, partial, soft_unicode, escape, missing, \
      concat, internalcode, next, object_type_repr
-from jinja2.exceptions import UndefinedError, TemplateRuntimeError, \
+from exceptions import UndefinedError, TemplateRuntimeError, \
      TemplateNotFound
 
 

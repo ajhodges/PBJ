@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    jinja2.bccache
+    bccache
     ~~~~~~~~~~~~~~
 
     This module implements the bytecode cache system Jinja is optionally
@@ -24,7 +24,7 @@ try:
     from hashlib import sha1
 except ImportError:
     from sha import new as sha1
-from jinja2.utils import open_if_exists
+from utils import open_if_exists
 
 
 # marshal works better on 3.x, one hack less required

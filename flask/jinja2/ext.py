@@ -11,12 +11,12 @@
     :license: BSD.
 """
 from collections import deque
-from jinja2 import nodes
-from jinja2.defaults import *
-from jinja2.environment import Environment
-from jinja2.runtime import Undefined, concat
-from jinja2.exceptions import TemplateAssertionError, TemplateSyntaxError
-from jinja2.utils import contextfunction, import_string, Markup, next
+import nodes
+from defaults import *
+from environment import Environment
+from runtime import Undefined, concat
+from exceptions import TemplateAssertionError, TemplateSyntaxError
+from utils import contextfunction, import_string, Markup, next
 
 
 # the only real useful gettext functions for a Jinja template.  Note

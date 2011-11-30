@@ -13,9 +13,9 @@
     :license: BSD.
 """
 import operator
-from jinja2.environment import Environment
-from jinja2.exceptions import SecurityError
-from jinja2.utils import FunctionType, MethodType, TracebackType, CodeType, \
+from environment import Environment
+from exceptions import SecurityError
+from utils import FunctionType, MethodType, TracebackType, CodeType, \
      FrameType, GeneratorType
 
 
@@ -34,7 +34,7 @@ import warnings
 
 # make sure we don't warn in python 2.6 about stuff we don't care about
 warnings.filterwarnings('ignore', 'the sets module', DeprecationWarning,
-                        module='jinja2.sandbox')
+                        module='sandbox')
 
 from collections import deque
 
@@ -116,7 +116,7 @@ def is_internal_attribute(obj, attr):
     python objects.  This is useful if the environment method
     :meth:`~SandboxedEnvironment.is_safe_attribute` is overriden.
 
-    >>> from jinja2.sandbox import is_internal_attribute
+    >>> from sandbox import is_internal_attribute
     >>> is_internal_attribute(lambda: None, "func_code")
     True
     >>> is_internal_attribute((lambda x:x).func_code, 'co_code')

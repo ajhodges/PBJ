@@ -8,7 +8,7 @@
     :copyright: (c) 2010 by the Jinja Team.
     :license: BSD.
 """
-from jinja2.nodes import Node
+from nodes import Node
 
 
 class NodeVisitor(object):

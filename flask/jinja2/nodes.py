@@ -15,7 +15,7 @@
 import operator
 from itertools import chain, izip
 from collections import deque
-from jinja2.utils import Markup, MethodType, FunctionType
+from utils import Markup, MethodType, FunctionType
 
 
 #: the types we support for context functions

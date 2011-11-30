@@ -10,16 +10,16 @@
 """
 import os
 import sys
-from jinja2 import nodes
-from jinja2.defaults import *
-from jinja2.lexer import get_lexer, TokenStream
-from jinja2.parser import Parser
-from jinja2.optimizer import optimize
-from jinja2.compiler import generate
-from jinja2.runtime import Undefined, new_context
-from jinja2.exceptions import TemplateSyntaxError, TemplateNotFound, \
+import nodes
+from defaults import *
+from lexer import get_lexer, TokenStream
+from parser import Parser
+from optimizer import optimize
+from compiler import generate
+from runtime import Undefined, new_context
+from exceptions import TemplateSyntaxError, TemplateNotFound, \
      TemplatesNotFound
-from jinja2.utils import import_string, LRUCache, Markup, missing, \
+from utils import import_string, LRUCache, Markup, missing, \
      concat, consume, internalcode, _encode_filename
 
 
@@ -560,7 +560,7 @@ class Environment(object):
 
         .. versionadded:: 2.4
         """
-        from jinja2.loaders import ModuleLoader
+        from loaders import ModuleLoader
 
         if log_function is None:
             log_function = lambda x: None
@@ -660,7 +660,7 @@ class Environment(object):
         # get any exceptions in template rendering there is no need to load
         # all of that.
         if _make_traceback is None:
-            from jinja2.debug import make_traceback as _make_traceback
+            from debug import make_traceback as _make_traceback
         traceback = _make_traceback(exc_info, source_hint)
         if rendered and self.exception_formatter is not None:
             return self.exception_formatter(traceback)

@@ -143,7 +143,8 @@ class module(ModuleType):
         return version
 
 # keep a reference to this module so that it's not garbage collected
-old_module = sys.modules['werkzeug']
+if 'werkzeug' in sys.modules:
+    old_module = sys.modules['werkzeug']
 
 
 # setup the new module and patch it into the dict of loaded modules

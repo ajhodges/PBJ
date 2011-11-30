@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    jinja2.compiler
+    compiler
     ~~~~~~~~~~~~~~~
 
     Compiles nodes into python code.
@@ -12,10 +12,10 @@ from cStringIO import StringIO
 from itertools import chain
 from copy import deepcopy
 from jinja2 import nodes
-from jinja2.nodes import EvalContext
-from jinja2.visitor import NodeVisitor
-from jinja2.exceptions import TemplateAssertionError
-from jinja2.utils import Markup, concat, escape, is_python_keyword, next
+from nodes import EvalContext
+from visitor import NodeVisitor
+from exceptions import TemplateAssertionError
+from utils import Markup, concat, escape, is_python_keyword, next
 
 
 operators = {
@@ -760,9 +760,9 @@ class CodeGenerator(NodeVisitor):
         assert frame is None, 'no root frame allowed'
         eval_ctx = EvalContext(self.environment, self.name)
 
-        from jinja2.runtime import __all__ as exported
+        from runtime import __all__ as exported
         self.writeline('from __future__ import division')
-        self.writeline('from jinja2.runtime import ' + ', '.join(exported))
+        self.writeline('from runtime import ' + ', '.join(exported))
         if not unoptimize_before_dead_code:
             self.writeline('dummy = lambda *x: None')
 

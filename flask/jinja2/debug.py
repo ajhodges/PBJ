@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-    jinja2.debug
+    debug
     ~~~~~~~~~~~~
 
     Implements the debug interface for Jinja.  This module does some pretty
@@ -13,8 +13,8 @@
 import sys
 import traceback
 from types import TracebackType
-from jinja2.utils import CodeType, missing, internal_code
-from jinja2.exceptions import TemplateSyntaxError
+from utils import CodeType, missing, internal_code
+from exceptions import TemplateSyntaxError
 
 # on pypy we can take advantage of transparent proxies
 try:
@@ -101,7 +101,7 @@ class ProcessedTraceback(object):
 
     def render_as_html(self, full=False):
         """Return a unicode string with the traceback as rendered HTML."""
-        from jinja2.debugrenderer import render_traceback
+        from debugrenderer import render_traceback
         return u'%s\n\n<!--\n%s\n-->' % (
             render_traceback(self, full=full),
             self.render_as_text().decode('utf-8', 'replace')
@@ -330,7 +330,7 @@ def _init_ugly_crap():
 tb_set_next = None
 if tproxy is None:
     try:
-        from jinja2._debugsupport import tb_set_next
+        from _debugsupport import tb_set_next
     except ImportError:
         try:
             tb_set_next = _init_ugly_crap()
