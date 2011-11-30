@@ -2,30 +2,31 @@
 
 import urllib
 import urllib2
+import pickle
+
 
 #called by node to register with gateway, returns pickle obj
-def register(gateway):
+def send_register(gateway):
     url="http://"+gateway+":5000/register"
     req=urllib2.Request(url)
     response=urllib2.urlopen(req)
     
     return(response.read())
-
+    
 #used to initiate/propagate a search request
-def search(search_id, filename, superpeerip):
+def send_search(searchreq, superpeerip):
     url="http://"+superpeerip+":5000/search"
-    values={'filename':filename,
-            'search_id':search_id}
+    values={'searchreq':pickle.dumps(searchreq)}
+    
     data=urllib.urlencode(values)
     req=urllib2.Request(url,data)
     response=urllib2.urlopen(req)
-    #print(response.read())
+    print(response.read())
 
 #called by node if the file has been found
-def report_found(search_id, path, clientip):
-    url="http://"+clientip+":5000/result"
-    values={'path':path,
-            'search_id':search_id}
+def send_found(requestor, path):
+    url="http://"+requestor+":5000/result"
+    values={'path':path}
     data=urllib.urlencode(values)
     req=urllib2.Request(url,data)
     response=urllib2.urlopen(req)
@@ -43,7 +44,7 @@ def download(filename, url):
 
 def main():
     #--testing functions--
-    #search(1,"hold.txt", "localhost")
+    send_search(pbj.searchReq(1,"wat.txt"), "localhost")
     #report_found(1,"hold.txt", "localhost")
     #download("hold.txt", "http://127.0.0.1:5000/share/hold.txt")
     #register("localhost")
