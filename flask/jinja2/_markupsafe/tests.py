@@ -1,6 +1,6 @@
 import gc
 import unittest
-from jinja2._markupsafe import Markup, escape, escape_silent
+from _markupsafe import Markup, escape, escape_silent
 
 
 class MarkupTestCase(unittest.TestCase):

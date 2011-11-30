@@ -8,7 +8,7 @@
     :copyright: (c) 2010 by Armin Ronacher.
     :license: BSD, see LICENSE for more details.
 """
-from jinja2._markupsafe import Markup
+from _markupsafe import Markup
 
 
 def escape(s):

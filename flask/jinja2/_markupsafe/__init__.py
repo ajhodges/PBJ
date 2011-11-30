@@ -126,7 +126,7 @@ class Markup(unicode):
         >>> Markup("Main &raquo; <em>About</em>").unescape()
         u'Main \xbb <em>About</em>'
         """
-        from jinja2._markupsafe._constants import HTML_ENTITIES
+        from _constants import HTML_ENTITIES
         def handle_match(m):
             name = m.group(1)
             if name in HTML_ENTITIES:
@@ -220,6 +220,6 @@ class _MarkupEscapeHelper(object):
 # we have to import it down here as the speedups and native
 # modules imports the markup type which is define above.
 try:
-    from jinja2._markupsafe._speedups import escape, escape_silent, soft_unicode
+    from _speedups import escape, escape_silent, soft_unicode
 except ImportError:
-    from jinja2._markupsafe._native import escape, escape_silent, soft_unicode
+    from _native import escape, escape_silent, soft_unicode
