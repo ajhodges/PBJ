@@ -1,3 +1,8 @@
+# activate virtualenv
+import os
+activate_this = os.path.expanduser("env/bin/activate_this.py")
+execfile(activate_this, dict(__file__=activate_this))
+
 #this code will be the backbone of every node's communication
 
 import sys

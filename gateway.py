@@ -1,3 +1,8 @@
+# activate virtualenv
+import os
+activate_this = os.path.expanduser("env/bin/activate_this.py")
+execfile(activate_this, dict(__file__=activate_this))
+
 #import socket
 import pickle
 import sys
@@ -101,5 +106,5 @@ def register():
     return pickle.dumps(data)
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', debug=True)
+    app.run(host='0.0.0.0', debug=True)
     #main()
