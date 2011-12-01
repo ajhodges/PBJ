@@ -64,7 +64,7 @@ class Client:
         if req.requestor is not None:
             req.ttl = req.ttl-1
 
-            if(self.completedSearches[req.requestor] is None):
+            if(req.requestor not in self.completedSearches):
                 self.completedSearches[req.requestor]=[]
 
             if (req.searchid in self.completedSearches[req.requestor]) or req.ttl<=0:
@@ -89,7 +89,8 @@ class Client:
                     if up is not req.requestor:
                         send_search(req, up)
         else:
-            send_search(req, self.upeer)
+            if self.upeer is not req.requestor:
+                send_search(req, self.upeer)
 
     def addPeer(self, p):
         if self.peers is None:
