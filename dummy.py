@@ -8,12 +8,10 @@ import httpserv
 
 import threading
 
-client = Client()
-def runClient():
-    client.connectToNetwork()
+
 
 if __name__ == '__main__':
-	server=threading.Thread(target=runClient)
-	server.start()
+    client = Client()
+    client.connectToNetwork()
 	httpserv.run(client)
 

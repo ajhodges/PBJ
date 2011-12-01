@@ -4,8 +4,9 @@ activate_this = os.path.expanduser("env/bin/activate_this.py")
 execfile(activate_this, dict(__file__=activate_this))
 
 import wx
-from multiprocessing import Process
 from pbj import Client
+
+import threading
 
 client = Client()
 
@@ -42,18 +43,18 @@ class MainWindow(wx.Frame):
     def updateResult(self, url):
         self.resultsarea.Append(url)
 
-def main():
+def runWindow():
     client.connectToNetwork()
-    
-    server = Process(target=runServer)
-    
     app = wx.App(False)
     frame = MainWindow(None, "PBJ")
     frame.setStatus("Connected to " + str(client.getUpeers()))
     app.MainLoop()
 
-def runServer():
-    httpserv.app.run(host='127.0.0.1', debug=True)
+def main():
+    client.connectToNetwork()
+	t=threading.Thread(target=runWindow)
+	t.start()
+	httpserv.run(client)
 
 if __name__ == '__main__':
     main()
