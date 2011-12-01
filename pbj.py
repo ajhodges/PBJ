@@ -19,13 +19,14 @@ class searchReq:
         self.requestor=requestor
 
 class Client:
-    def __init__(self):
+    def __init__(self, path='share'):
         self.isUltra = None     # boolean
         self.peers = []   # list of connected peers
         self.upeers = []  # list of connected ultrapeers
         self.upeer = None # ultrapeer of node
         self.searchctr = 0
         self.completedSearches = {}
+        self.share = path
 
     def __str__(self):
         if(self.isUltra):
@@ -58,12 +59,11 @@ class Client:
 
     def checkForFile(self,filename):
         foundFiles = []
-        for root, dirs, files in os.walk('share'):
+        for root, dirs, files in os.walk(self.share):
             for name in files:
                 if name.lower().find(x.lower()) != -1:
                     foundFiles.append(root + '/' + name)
-        
-         return foundFiles   
+        return foundFiles
     
     def handleSearch(self, req):
         #requestor is null when requestor=self
@@ -78,9 +78,9 @@ class Client:
 
             self.completedSearches[req.requestor].append(req.searchid)
                 
-            for foudFiles self.checkForFile(req.filename):
+            for foundFile in self.checkForFile(req.filename):
                 #found file
-                send_found(req.requestor, foundFiles)
+                send_found(req.requestor, foundFile)
                 return
             
         if(self.isUltra):

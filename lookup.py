@@ -6,12 +6,13 @@ execfile(activate_this, dict(__file__=activate_this))
 import sys
 import os
 
+from pbj import SHARE_PATH
 
 def checkFile(filename):
-    if not os.path.exists('share'):
-        os.makedirs('share')
+    if not os.path.exists(SHARE_PATH):
+        os.makedirs(SHARE_PATH)
 
-    print os.path.isfile('share/' + filename)
+    print os.path.isfile(SHARE_PATH + '/' + filename)
 
 
 

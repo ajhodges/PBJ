@@ -1,5 +1,5 @@
 # activate virtualenv
-import os, time
+import os, sys
 activate_this = os.path.expanduser("env/bin/activate_this.py")
 execfile(activate_this, dict(__file__=activate_this))
 
@@ -9,7 +9,10 @@ import httpserv
 import threading
 
 if __name__ == '__main__':
-    client = Client()
+    if(len(sys.argv)==2):
+        client = Client(sys.argv[1])
+    else:
+        client = Client()
     client.connectToNetwork()
     httpserv.run(client)
 
