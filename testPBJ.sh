@@ -8,7 +8,9 @@ fi
 machine=$1
 sharepath="tmp/$machine"
 
-mkdir -p "$HOME/PBJ/$sharepath"
-touch "$HOME/PBJ/$sharepath/$machine.txt"
+cd "$HOME/PBJ"
 
-python $HOME/PBJ/dummy.py $sharepath &
+mkdir -p "$sharepath"
+touch "$sharepath/$machine.txt"
+
+nohup python dummy.py $sharepath &

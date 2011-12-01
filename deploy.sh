@@ -35,5 +35,5 @@ done
 
 for machine in "${machines[@]}";
 do
- ssh -o "StrictHostKeyChecking no" $USER@$machine.cs.clemson.edu 'bash -s' < testPBJ.sh $machine
+ ssh -o "StrictHostKeyChecking no" $USER@$machine.cs.clemson.edu 'nohup bash -s' < testPBJ.sh $machine &
 done
