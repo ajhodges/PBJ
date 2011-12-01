@@ -77,12 +77,14 @@ class Client:
                 return
             
         if(self.isUltra):
-            for p in self.peers:
-                send_search(req, p)
-                
-            for up in self.upeers:
-                #send req to connected upeer
-                send_search(req, up)
+            if self.peers is not None:
+                for p in self.peers:
+                    send_search(req, p)
+            
+            if self.upeers is not None:    
+                for up in self.upeers:
+                    #send req to connected upeer
+                    send_search(req, up)
         else:
             send_search(req, self.upeer)
 

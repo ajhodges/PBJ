@@ -12,8 +12,6 @@ def main():
     client.connectToNetwork()
     
     server = Process(target=runServer)
-    
-    app.MainLoop()
 
 def runServer():
     httpserv.app.run(host='0.0.0.0', debug=True)
