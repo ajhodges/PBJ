@@ -6,7 +6,9 @@ if [ -z "$1" ]; then
 fi
 
 machine=$1
-sharepath="$HOME/PBJ/tmp/$machine"
+sharepath="tmp/$machine"
 
-mkdir -p $sharepath
-touch "$HOME/PBJ/tmp/$machine/$machine.txt"
+mkdir -p "$HOME/PBJ/$sharepath"
+touch "$HOME/PBJ/$sharepath/$machine.txt"
+
+python $HOME/PBJ/dummy.py $sharepath &
