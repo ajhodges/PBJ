@@ -8,8 +8,6 @@ import httpserv
 
 import threading
 
-
-
 if __name__ == '__main__':
     client = Client()
     client.connectToNetwork()
