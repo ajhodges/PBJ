@@ -25,7 +25,7 @@ def search():
     
     if(searchreq.requestor is None):
         searchreq.requestor=request.remote_addr
-    
+    app.logger.debug(searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")")
     return searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")"
 
 #--Node Receive Download Request--
@@ -50,16 +50,19 @@ def result():
 def register():
     #add request.remote_addr as a connected peer
     app.client.addPeer(request.remote_addr)
-    return
+    return "OK!"
     
 #--UPeer Notified Of Another UPeer--
 @app.route("/imaupeer", methods=['GET'])
 def register():
     #add request.remote_addr as a connected upeer
     app.client.addUPeer(request.remote_addr)
-    return
+    return "OK!"
 
 def run(obsClient):
+    import logging
+    hdlr=logging.FileHandler('flask.log')
+    app.logger.addHandler(hdlr)
     app.client=obsClient
     app.run(host='0.0.0.0')
 
