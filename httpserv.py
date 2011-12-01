@@ -50,7 +50,7 @@ def result():
     #add url/ip to list of results
     
     if(app.window is not None):
-        window.updateResult(url)
+        app.window.updateResult(url)
     return url
 
 #--UPeer Notified Of A Peer--
