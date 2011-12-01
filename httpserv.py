@@ -40,9 +40,9 @@ def getfile(filename):
 def result():
     path=request.form['path']
     ip=request.remote_addr
-    url="http://"+ip+":5000/"+path
+    url="http://"+ip+":5000/share/"+path
     #add url/ip to list of results
-    frame.updateResult(url)
+    #frame.updateResult(url)
     return url
 
 #--UPeer Notified Of A Peer--
