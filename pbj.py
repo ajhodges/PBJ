@@ -70,7 +70,7 @@ class Client:
             if len(self.completedSearches) > 4:
                 self.completedSearches=[]
                 
-            self.completedSearches.add(req.searchid)
+            self.completedSearches.append(req.searchid)
             
             if checkForFile(req.filename) == True:
                 #found file
@@ -92,12 +92,14 @@ class Client:
     def addPeer(self, p):
         if self.peers is None:
             self.peers=[p]
-        self.peers.append(p)
+        else:
+            self.peers.append(p)
     
     def addUPeer(self, up):
         if self.upeers is None:
             self.upeers=[up]
-        self.upeers.append(up)
+        else:
+            self.upeers.append(up)
 
     def search(self, filename):
         req=searchReq(self.searchctr, filename)
