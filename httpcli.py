@@ -15,7 +15,6 @@ def send_register(gateway):
     url="http://"+gateway+":5000/register"
     req=urllib2.Request(url)
     response=urllib2.urlopen(req)
-    
     return(response.read())
     
 #called by peer to register with ultrapeer

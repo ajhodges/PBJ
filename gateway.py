@@ -63,7 +63,6 @@ class Network:
             self.upeers.append(newNode)
             print "Node %s added to network as Ultrapeer %d." % (name, len(self.upeers))
             return result
-
         else:
             upeer = self.findUPeer(self.root)
             if upeer is None:

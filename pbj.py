@@ -44,6 +44,7 @@ class Client:
     def connectToNetwork(self):
         data = send_register(GATEWAY_ADDR)
         data = pickle.loads(data)
+
         if data['isUltra']:
             self.isUltra = True
             self.upeers = data['uPeers']
