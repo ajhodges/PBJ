@@ -29,7 +29,7 @@ def search():
         searchreq.requestor=request.remote_addr
     app.logger.debug(searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")")
 
-    thr=threading.Thread(target=app.client.handleSearch, [args=(searchreq,)])
+    thr=threading.Thread(target=app.client.handleSearch, args=(searchreq,))
     thr.start()
 
     return searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")"
