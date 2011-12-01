@@ -52,9 +52,9 @@ def runWindow():
 
 def main():
     client.connectToNetwork()
-	t=threading.Thread(target=runWindow)
-	t.start()
-	httpserv.run(client)
+    t=threading.Thread(target=runWindow)
+    t.start()
+    httpserv.run(client)
 
 if __name__ == '__main__':
     main()
