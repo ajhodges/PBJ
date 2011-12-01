@@ -11,6 +11,8 @@ import pickle
 from flask import Flask
 from flask import request, send_from_directory
 
+import threading
+
 app = Flask(__name__)
 
 app.client = None
@@ -26,7 +28,10 @@ def search():
     if(searchreq.requestor is None):
         searchreq.requestor=request.remote_addr
     app.logger.debug(searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")")
-    app.client.handleSearch(searchreq)
+
+    thr=threading.Thread(target=app.client.handleSearch, [args=(searchreq,)])
+    thr.start()
+
     return searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")"
 
 #--Node Receive Download Request--
