@@ -27,6 +27,7 @@ def search():
         searchreq.requestor=request.remote_addr
     app.logger.debug(searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")")
     app.client.handleSearch(searchreq)
+    return searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")"
 
 #--Node Receive Download Request--
 #Ex: curl http://localhost:5000/share/wat.txt
