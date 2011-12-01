@@ -49,7 +49,7 @@ def result():
     url="http://"+ip+":5000/share/"+path
     #add url/ip to list of results
     
-    if(app.window is not Null):
+    if(app.window is not None):
         window.updateResult(url)
     return url
 
