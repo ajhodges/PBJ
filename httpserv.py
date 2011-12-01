@@ -48,7 +48,9 @@ def result():
     ip=request.remote_addr
     url="http://"+ip+":5000/share/"+path
     #add url/ip to list of results
-    #frame.updateResult(url)
+    
+    if(app.window is not Null):
+        window.updateResult(url)
     return url
 
 #--UPeer Notified Of A Peer--
@@ -65,12 +67,11 @@ def register():
     app.client.addUPeer(request.remote_addr)
     return "OK!"
 
-def run(obsClient):
+def run(obsClient, obsWindow=None):
     import logging
     hdlr=logging.FileHandler('flask.log')
     app.logger.addHandler(hdlr)
     app.client=obsClient
+    app.window=obsWindow
     app.run(host='0.0.0.0')
-
-if __name__ == "__main__":
-    run()
+    

@@ -45,17 +45,18 @@ class MainWindow(wx.Frame):
     def updateResult(self, url):
         self.resultsarea.Append(url)
 
+app = wx.App(False)
+frame = MainWindow(None, "PBJ")
+frame.setStatus("Connected to " + str(client.getUpeers()))
+
 def runWindow():
-    app = wx.App(False)
-    frame = MainWindow(None, "PBJ")
-    frame.setStatus("Connected to " + str(client.getUpeers()))
     app.MainLoop()
 
 def main():
     client.connectToNetwork()
     t=threading.Thread(target=runWindow)
     t.start()
-    httpserv.run(client)
+    httpserv.run(client, frame)
 
 if __name__ == '__main__':
     main()
