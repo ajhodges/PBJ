@@ -92,7 +92,7 @@ class Client:
     def addPeer(self, p):
         self.peers.append(p)
     
-    def addUPeer(self):
+    def addUPeer(self, up):
         self.upeers.append(up)
 
     def search(self, filename):

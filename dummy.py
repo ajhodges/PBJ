@@ -12,9 +12,8 @@ client = Client()
 def runClient():
     client.connectToNetwork()
 
-
 if __name__ == '__main__':
 	server=threading.Thread(target=runClient)
 	server.start()
-	httpserv.run()
+	httpserv.run(client)
 

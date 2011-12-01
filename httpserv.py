@@ -13,6 +13,8 @@ from flask import request, send_from_directory
 
 app = Flask(__name__)
 
+app.client = None
+
 #--Node Receive Search Request--
 #Ex: curl -d "filename=wat.txt&search_id=1" http://localhost:5000/search
 @app.route("/search",methods=['POST'])
@@ -47,17 +49,18 @@ def result():
 @app.route("/imapeer", methods=['GET'])
 def register():
     #add request.remote_addr as a connected peer
-    client.addpeer(request.remote_addr)
+    app.client.addPeer(request.remote_addr)
     return
     
 #--UPeer Notified Of Another UPeer--
 @app.route("/imaupeer", methods=['GET'])
 def register():
     #add request.remote_addr as a connected upeer
-    client.addupeer(request.remote_addr)
+    app.client.addUPeer(request.remote_addr)
     return
 
-def run():
+def run(obsClient):
+    app.client=obsClient
     app.run(host='0.0.0.0')
 
 if __name__ == "__main__":
