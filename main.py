@@ -8,6 +8,8 @@ from pbj import Client
 
 import threading
 
+import httpserv
+
 client = Client()
 
 class MainWindow(wx.Frame):
@@ -44,7 +46,6 @@ class MainWindow(wx.Frame):
         self.resultsarea.Append(url)
 
 def runWindow():
-    client.connectToNetwork()
     app = wx.App(False)
     frame = MainWindow(None, "PBJ")
     frame.setStatus("Connected to " + str(client.getUpeers()))

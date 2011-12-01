@@ -90,9 +90,13 @@ class Client:
             send_search(req, self.upeer)
 
     def addPeer(self, p):
+        if self.peers is None:
+            self.peers=[p]
         self.peers.append(p)
     
     def addUPeer(self, up):
+        if self.upeers is None:
+            self.upeers=[up]
         self.upeers.append(up)
 
     def search(self, filename):
