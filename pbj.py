@@ -57,7 +57,13 @@ class Client:
             send_imapeer(self.upeer)
 
     def checkForFile(self,filename):
-         return os.path.isfile('share/' + filename)   
+        foundFiles = []
+        for root, dirs, files in os.walk('share'):
+            for name in files:
+                if name.lower().find(x.lower()) != -1:
+                    foundFiles.append(root + '/' + name)
+        
+         return foundFiles   
     
     def handleSearch(self, req):
         #requestor is null when requestor=self
@@ -72,9 +78,9 @@ class Client:
 
             self.completedSearches[req.requestor].append(req.searchid)
                 
-            if self.checkForFile(req.filename) == True:
+            for foudFiles self.checkForFile(req.filename):
                 #found file
-                send_found(req.requestor, req.filename)
+                send_found(req.requestor, foundFiles)
                 return
             
         if(self.isUltra):
