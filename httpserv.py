@@ -36,13 +36,26 @@ def getfile(filename):
 #Ex: curl -d "path=share/wat.txt&search_id=1" http://localhost:5000/result
 @app.route("/result",methods=['POST'])
 def result():
-    search_id=request.form['search_id']
     path=request.form['path']
     ip=request.remote_addr
     url="http://"+ip+":5000/"+path
     #add url/ip to list of results
-    #handleResult(url)
+    frame.updateResult(url)
     return url
+
+#--UPeer Notified Of A Peer--
+@app.route("/imapeer", methods=['GET'])
+def register():
+    #add request.remote_addr as a connected peer
+    client.addpeer(request.remote_addr)
+    return
+    
+#--UPeer Notified Of Another UPeer--
+@app.route("/imaupeer", methods=['GET'])
+def register():
+    #add request.remote_addr as a connected upeer
+    client.addupeer(request.remote_addr)
+    return
 
 #if __name__ == "__main__":
 #    app.run(host='127.0.0.1', debug=True)

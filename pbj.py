@@ -6,9 +6,9 @@ execfile(activate_this, dict(__file__=activate_this))
 #import socket
 import pickle
 
-from httpcli import send_register, send_search
+from httpcli import send_register, send_search, send_imapeer, send_imaupeer
 
-GATEWAY_ADDR = 'localhost'
+GATEWAY_ADDR = 'gecko6.cs.clemson.edu'
 TIME_TO_LIVE = 7
 
 class searchReq:
@@ -42,20 +42,18 @@ class Client:
         return upeers
 
     def connectToNetwork(self):
-#        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-#        sock.connect((GATEWAY_ADDR, 5555))
-#        data = sock.recv(102400)
         data = send_register(GATEWAY_ADDR)
         data = pickle.loads(data)
         if data['isUltra']:
             self.isUltra = True
             self.upeers = data['uPeers']
-            # tell upeers about this
+            if self.upeers is not None:
+                for up in self.upeers:
+                    send_imaupeer(up)
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
-            # tell upeer about this
+            send_imapeer(self.upeer)
 
     def checkForFile(self,filename):
          return os.path.isfile('share/' + filename)   
@@ -66,6 +64,11 @@ class Client:
             req.ttl = req.ttl-1
             if (req.searchid in self.completedSearches) or req.ttl<=0:
                 return
+                
+            ##random way of making sure list doesnt get too long
+            if len(self.completedSearches) > 4:
+                self.completedSearches=[]
+                
             self.completedSearches.add(req.searchid)
             
             if checkForFile(req.filename) == True:
@@ -82,18 +85,14 @@ class Client:
                 send_search(req, up)
         else:
             send_search(req, self.upeer)
-            
+
+    def addPeer(self, p):
+        self.peers.append(p)
+    
+    def addUPeer(self):
+        self.upeers.append(up)
+
     def search(self, filename):
         req=searchReq(self.searchctr, filename)
         self.searchctr=self.searchctr+1
-        self.handleSearch(req)     
-            
-
-#def main():
-#    client = Client()
-#    client.connectToNetwork()
-#    client.search("wat")
-#    print client
-
-if __name__ == '__main__':
-    main()
+        self.handleSearch(req)

@@ -18,6 +18,18 @@ def send_register(gateway):
     
     return(response.read())
     
+#called by peer to register with ultrapeer
+def send_imapeer(upeer):
+    url="http://"+upeer+":5000/imapeer"
+    req=urllib2.Request(url)
+    response=urllib2.urlopen(req)
+
+#called by ultrapeer to register with ultrapeer
+def send_imaupeer(upeer):
+    url="http://"+upeer+":5000/imaupeer"
+    req=urllib2.Request(url)
+    response=urllib2.urlopen(req)
+    
 #used to initiate/propagate a search request
 def send_search(searchreq, superpeerip):
     url="http://"+superpeerip+":5000/search"
@@ -26,7 +38,7 @@ def send_search(searchreq, superpeerip):
     data=urllib.urlencode(values)
     req=urllib2.Request(url,data)
     response=urllib2.urlopen(req)
-    print(response.read())
+    #print(response.read())
 
 #called by node if the file has been found
 def send_found(requestor, path):
