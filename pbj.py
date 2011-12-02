@@ -61,7 +61,7 @@ class Client:
         foundFiles = []
         for root, dirs, files in os.walk(self.share):
             for name in files:
-                if name.lower().find(x.lower()) != -1:
+                if name.lower().find(filename.lower()) != -1:
                     foundFiles.append(root + '/' + name)
         return foundFiles
     
@@ -82,7 +82,7 @@ class Client:
                 #found file
                 send_found(req.requestor, foundFile)
                 return
-            
+        
         if(self.isUltra):
             if self.peers is not None:
                 for p in self.peers:
