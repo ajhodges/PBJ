@@ -8,7 +8,7 @@ import pickle
 
 from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found
 
-GATEWAY_ADDR = 'gecko6.cs.clemson.edu'
+GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
 TIME_TO_LIVE = 7
 
 class searchReq:
