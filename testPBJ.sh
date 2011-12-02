@@ -13,4 +13,4 @@ cd "$HOME/PBJ"
 mkdir -p "$sharepath"
 touch "$sharepath/$machine.txt"
 
-python dummy.py $sharepath
+python dummy.py $sharepath &
