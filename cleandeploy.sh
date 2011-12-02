@@ -35,5 +35,5 @@ done
 
 for machine in "${machines[@]}";
 do
- ssh -o "StrictHostKeyChecking no" -o "ConnectTimeout=2" $USER@$machine.cs.clemson.edu "killall python && exit"
+ ssh -o "StrictHostKeyChecking no" -o "ConnectTimeout=2" $USER@$machine.cs.clemson.edu "killall python && exit" &
 done
