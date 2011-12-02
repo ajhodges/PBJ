@@ -43,7 +43,9 @@ class MainWindow(wx.Frame):
         self.SetStatusText(text)
         
     def updateResult(self, url):
+        wx.MutexGuiEnter()
         self.resultsarea.Append(url)
+        wx.MutexGuiLeave()
 
 app = wx.App(False)
 frame = MainWindow(None, "PBJ")
