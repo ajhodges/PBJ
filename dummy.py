@@ -10,7 +10,7 @@ import threading
 
 if __name__ == '__main__':
     if(len(sys.argv)==2):
-        client = Client(sys.argv[1])
+        client = Client(str(sys.argv[1]))
     else:
         client = Client()
     client.connectToNetwork()

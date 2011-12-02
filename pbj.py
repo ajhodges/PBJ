@@ -64,7 +64,7 @@ class Client:
                 if name.lower().find(filename.lower()) != -1:
                     newFile = root + '/' + name
                     prev,split,post = newFile.partition('/')
-                    foundFiles.append(post) #will bug for subdirs..
+                    foundFiles.append(post)
         return foundFiles
     
     def handleSearch(self, req):
