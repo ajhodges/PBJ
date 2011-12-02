@@ -62,7 +62,9 @@ class Client:
         for root, dirs, files in os.walk(self.share):
             for name in files:
                 if name.lower().find(filename.lower()) != -1:
-                    foundFiles.append(name) #will bug for subdirs..
+                    newFile = root + '/' + name
+                    prev,split,post = newFile.partition('/')
+                    foundFiles.append(post) #will bug for subdirs..
         return foundFiles
     
     def handleSearch(self, req):
