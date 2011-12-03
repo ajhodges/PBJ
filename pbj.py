@@ -75,7 +75,7 @@ class Client:
                             print("up "+ up + " disconnected")
                             self.upeers.remove(up)
                 if self.peers is not None:
-                    print("iterating through peers" + self.peers)
+                    print("iterating through peers")
                     for p in self.peers:
                         print("pinging peer "+p)
                         if(send_ping(p) is False):
