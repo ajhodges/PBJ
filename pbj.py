@@ -60,8 +60,29 @@ class Client:
             send_imapeer(self.upeer)
         
         t=threading.Thread(target=self.pingNodes)
-        t.start()
-    
+        t.start()    
+
+    def reconnect(self):
+        self.isUltra = None     # boolean
+        self.peers = []   # list of connected peers
+        self.upeers = []  # list of connected ultrapeers
+        self.upeer = None # ultrapeer of node
+        self.searchctr = 0
+        self.completedSearches = {}
+        data = send_register(GATEWAY_ADDR)
+        data = pickle.loads(data)
+        nodesToPing=()
+        if data['isUltra']:
+            self.isUltra = True
+            self.upeers = data['uPeers']
+            if self.upeers is not None:
+                for up in self.upeers:
+                    send_imaupeer(up)
+        else:
+            self.isUltra = False
+            self.upeer = data['uPeer']
+            send_imapeer(self.upeer)
+
     def pingNodes(self):
         while True:
             time.sleep(5)
@@ -85,8 +106,8 @@ class Client:
             else:
                 if(send_ping(self.upeer) is False):
                     print("Lost connection to upeer "+self.upeer+", reconnecting to network.")
-                    self.connectToNetwork()
-                    thread.exit()
+                    self.reconnect()
+                    #thread.exit()
 
     def checkForFile(self,filename):
         foundFiles = []
