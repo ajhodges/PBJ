@@ -70,21 +70,21 @@ class Client:
                 if self.upeers is not None:
                     print("iterating through upeers")
                     for up in self.upeers:
-                        print("pinging upeer "+p)
+                        print("pinging upeer "+up)
                         if(send_ping(up) is False):
-                            print("up "+ p + " disconnected")
-                            self.upeers.remove(node)
+                            print("up "+ up + " disconnected")
+                            self.upeers.remove(up)
                 if self.peers is not None:
-                    print("iterating through peers")
+                    print("iterating through peers" + self.peers)
                     for p in self.peers:
                         print("pinging peer "+p)
                         if(send_ping(p) is False):
                             print("p " + p + " disconnected")
-                            self.peers.remove(node)
+                            self.peers.remove(p)
                             #update gateway peer count
             else:
                 if(send_ping(self.upeer) is False):
-                    print("Lost connection to upeer "+node+", reconnecting to network.")
+                    print("Lost connection to upeer "+self.upeer+", reconnecting to network.")
                     self.connectToNetwork()
                     thread.exit()
 
