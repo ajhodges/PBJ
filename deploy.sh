@@ -27,7 +27,7 @@ done
 
 #22 geckos, but use gecko 22 as gateway
 COUNTER=1
-while [  $COUNTER -lt 20 ]; do
+while [  $COUNTER -lt 22 ]; do
  machines[$MACHINECOUNT]=gecko$COUNTER
  let COUNTER=COUNTER+1 
  let MACHINECOUNT=MACHINECOUNT+1

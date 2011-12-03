@@ -101,8 +101,12 @@ class Network:
             print "Node %s added to network under Ultrapeer %s" % (name, upeer.upeerid)
 
             return result
-    
-
+            
+    def UPeerRemovePeer(self, upeer, peer):
+        for ids,up in self.upeers.items():
+            if(up.name==upeer):
+                del up.peers[peer]
+        #set upeer's count to count
 
 #def main():
 #    pbj = Network()
@@ -123,6 +127,13 @@ pbj = Network()
 def register():
     data=pbj.addPeer(request.remote_addr)
     return pickle.dumps(data)
+    
+@app.route("/upeer_remove_peer", methods=['POST'])
+def updatePeerCount():
+    peer=request.form['peer']
+    upeer=request.remote_addr
+    pbj.UPeerRemovePeer(upeer, peer)
+    return "OK"
 
 if __name__ == "__main__":
     

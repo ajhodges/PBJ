@@ -75,6 +75,14 @@ def download(filename, url):
     download = open('share/'+filename, "w")
     download.write(response.read())
     download.close()
+    
+#called by ultrapeer to u
+def send_gateway_remove_peer(p):
+    url="http://"+pbj.GATEWAY_ADDR+":5000/upeer_remove_peer"
+    values={'peer':p}
+    data=urllib.urlencode(values)
+    req=urllib2.Request(url,data)
+    response=urllib2.urlopen(req)
 
 def main():
     #--testing functions--

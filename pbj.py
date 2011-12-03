@@ -7,7 +7,7 @@ import pickle
 import time
 import threading
 
-from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found, send_ping
+from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found, send_ping, send_gateway_update
 
 GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
 TIME_TO_LIVE = 7
@@ -107,13 +107,13 @@ class Client:
                         if(send_ping(p) is False):
                             print("p " + p + " disconnected")
                             self.peers.remove(p)
+                            send_gateway_remove_peer(p)
                             #update gateway peer count
             else:
                 if(send_ping(self.upeer) is False):
                     print("Lost connection to upeer "+self.upeer+", reconnecting to network.")
                     time.sleep(5)
                     self.reconnect()
-                    #thread.exit()
 
     def checkForFile(self,filename):
         foundFiles = []
