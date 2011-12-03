@@ -83,7 +83,7 @@ class Client:
             for foundFile in self.checkForFile(req.filename):
                 #found file
                 send_found(req.requestor, foundFile)
-                return
+                #return
         
         if(self.isUltra):
             if self.peers is not None:

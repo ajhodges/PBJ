@@ -9,6 +9,16 @@ import urllib
 import urllib2
 import pickle
 
+#called by peer to register with ultrapeer
+def send_ping(node):
+    url="http://"+node+":5000/ping"
+    try:
+        req=urllib2.Request(url)
+        response=urllib2.urlopen(req)
+        return True
+    except urllib2.HTTPError:
+        return False
+
 
 #called by node to register with gateway, returns pickle obj
 def send_register(gateway):

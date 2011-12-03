@@ -67,6 +67,12 @@ def register():
     app.client.addUPeer(request.remote_addr)
     return "OK!"
 
+#--UPeer Notified Of Another UPeer--
+@app.route("/ping", methods=['GET'])
+def register():
+    #add request.remote_addr as a connected upeer
+    return "OK!"
+
 def run(obsClient, obsWindow=None):
     import logging
     hdlr=logging.FileHandler('flask.log')
