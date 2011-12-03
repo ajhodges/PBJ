@@ -8,6 +8,7 @@ execfile(activate_this, dict(__file__=activate_this))
 import urllib
 import urllib2
 import pickle
+GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
 
 #called by peer to register with ultrapeer
 def send_ping(node):
@@ -77,7 +78,7 @@ def download(filename, url):
     
 #called by ultrapeer to u
 def send_gateway_remove_peer(p):
-    url="http://"+pbj.GATEWAY_ADDR+":5000/upeer_remove_peer"
+    url="http://"+GATEWAY_ADDR+":5000/upeer_remove_peer"
     values={'peer':p}
     data=urllib.urlencode(values)
     req=urllib2.Request(url,data)
