@@ -55,21 +55,21 @@ def result():
 
 #--UPeer Notified Of A Peer--
 @app.route("/imapeer", methods=['GET'])
-def register():
+def regPeer():
     #add request.remote_addr as a connected peer
     app.client.addPeer(request.remote_addr)
     return "OK!"
     
 #--UPeer Notified Of Another UPeer--
 @app.route("/imaupeer", methods=['GET'])
-def register():
+def regUPeer():
     #add request.remote_addr as a connected upeer
     app.client.addUPeer(request.remote_addr)
     return "OK!"
 
 #--UPeer Notified Of Another UPeer--
 @app.route("/ping", methods=['GET'])
-def register():
+def ping():
     #add request.remote_addr as a connected upeer
     return "OK!"
 

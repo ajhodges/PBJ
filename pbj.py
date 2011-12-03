@@ -74,7 +74,8 @@ class Client:
         nodesToPing=()
         if data['isUltra']:
             self.isUltra = True
-            self.upeers = data['uPeers']
+            if data['uPeers'] is not None:
+                self.upeers = data['uPeers']
             if self.upeers is not None:
                 for up in self.upeers:
                     send_imaupeer(up)
@@ -96,7 +97,7 @@ class Client:
                             print("up "+ up + " disconnected")
                             self.upeers.remove(up)
                 if self.peers is not None:
-                    print("iterating through peers")
+                    print("iterating through peers " + str(self.peers))
                     for p in self.peers:
                         print("pinging peer "+p)
                         if(send_ping(p) is False):
@@ -153,6 +154,7 @@ class Client:
                 send_search(req, self.upeer)
 
     def addPeer(self, p):
+        print("adding peer "+ p)
         if self.peers is None:
             self.peers=[p]
         else:

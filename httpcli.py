@@ -30,7 +30,6 @@ def send_register(gateway):
 #called by peer to register with ultrapeer
 def send_imapeer(upeer):
     url="http://"+upeer+":5000/imapeer"
-    print(url)
     req=urllib2.Request(url)
     response=urllib2.urlopen(req)
 
