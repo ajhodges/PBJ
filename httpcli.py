@@ -16,7 +16,7 @@ def send_ping(node):
         req=urllib2.Request(url)
         response=urllib2.urlopen(req)
         return True
-    except urllib2.HTTPError:
+    except Exception:
         return False
 
 
