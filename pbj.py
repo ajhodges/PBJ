@@ -68,12 +68,14 @@ class Client:
             print("tick")
             if(self.isUltra):
                 if self.upeers is not None:
+                    print("iterating through upeers")
                     for up in self.upeers:
                         print("pinging upeer "+p)
                         if(send_ping(up) is False):
                             print("up "+ p + " disconnected")
                             self.upeers.remove(node)
                 if self.peers is not None:
+                    print("iterating through peers")
                     for p in self.peers:
                         print("pinging peer "+p)
                         if(send_ping(p) is False):
@@ -84,6 +86,7 @@ class Client:
                 if(send_ping(self.upeer) is False):
                     print("Lost connection to upeer "+node+", reconnecting to network.")
                     self.connectToNetwork()
+                    thread.exit()
 
     def checkForFile(self,filename):
         foundFiles = []
