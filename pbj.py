@@ -7,7 +7,7 @@ import pickle
 import time
 import threading
 
-from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found, send_ping, send_gateway_update
+from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found, send_ping, send_gateway_remove_peer
 
 GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
 TIME_TO_LIVE = 7
