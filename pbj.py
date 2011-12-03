@@ -3,8 +3,9 @@ import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")
 execfile(activate_this, dict(__file__=activate_this))
 
-#import socket
 import pickle
+import time
+import threading
 
 from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found
 
@@ -45,6 +46,7 @@ class Client:
     def connectToNetwork(self):
         data = send_register(GATEWAY_ADDR)
         data = pickle.loads(data)
+        nodesToPing=()
 
         if data['isUltra']:
             self.isUltra = True
@@ -56,6 +58,32 @@ class Client:
             self.isUltra = False
             self.upeer = data['uPeer']
             send_imapeer(self.upeer)
+        
+        t=threading.Thread(target=self.pingNodes)
+        t.start()
+    
+    def pingNodes(self):
+        while True:
+            time.sleep(5)
+            print("tick")
+            if(self.isUltra):
+                if self.upeers is not None:
+                    for up in self.upeers:
+                        print("pinging upeer "+p)
+                        if(send_ping(up) is False):
+                            print("up "+ p + " disconnected")
+                            self.upeers.remove(node)
+                if self.peers is not None:
+                    for p in self.peers:
+                        print("pinging peer "+p)
+                        if(send_ping(p) is False):
+                            print("p " + p + " disconnected")
+                            self.peers.remove(node)
+                            #update gateway peer count
+            else:
+                if(send_ping(self.upeer) is False):
+                    print("Lost connection to upeer "+node+", reconnecting to network.")
+                    self.connectToNetwork()
 
     def checkForFile(self,filename):
         foundFiles = []
