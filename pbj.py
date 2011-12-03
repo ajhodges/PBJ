@@ -57,7 +57,9 @@ class Client:
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
-            send_imapeer(self.upeer)
+            if send_imapeer(self.upeer) is False:
+                time.sleep(5)
+                self.reconnect()
         
         t=threading.Thread(target=self.pingNodes)
         t.start()    
@@ -82,7 +84,9 @@ class Client:
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
-            send_imapeer(self.upeer)
+            if send_imapeer(self.upeer) is False:
+                time.sleep(5)
+                self.reconnect()
 
     def pingNodes(self):
         while True:
@@ -107,6 +111,7 @@ class Client:
             else:
                 if(send_ping(self.upeer) is False):
                     print("Lost connection to upeer "+self.upeer+", reconnecting to network.")
+                    time.sleep(5)
                     self.reconnect()
                     #thread.exit()
 
@@ -141,14 +146,12 @@ class Client:
         if(self.isUltra):
             if self.peers is not None:
                 for p in self.peers:
-                    if p is not req.requestor:
-                        send_search(req, p)
+                    send_search(req, p)
             
             if self.upeers is not None:    
                 for up in self.upeers:
                     #send req to connected upeer
-                    if up is not req.requestor:
-                        send_search(req, up)
+                    send_search(req, up)
         else:
             if self.upeer is not req.requestor:
                 send_search(req, self.upeer)

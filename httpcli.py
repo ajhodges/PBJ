@@ -30,14 +30,22 @@ def send_register(gateway):
 #called by peer to register with ultrapeer
 def send_imapeer(upeer):
     url="http://"+upeer+":5000/imapeer"
-    req=urllib2.Request(url)
-    response=urllib2.urlopen(req)
+    try:
+        req=urllib2.Request(url)
+        response=urllib2.urlopen(req)
+        return True
+    except Exception:
+        return False
 
 #called by ultrapeer to register with ultrapeer
 def send_imaupeer(upeer):
     url="http://"+upeer+":5000/imaupeer"
-    req=urllib2.Request(url)
-    response=urllib2.urlopen(req)
+    try:
+        req=urllib2.Request(url)
+        response=urllib2.urlopen(req)
+        return True
+    except Exception:
+        return False
     
 #used to initiate/propagate a search request
 def send_search(searchreq, superpeerip):

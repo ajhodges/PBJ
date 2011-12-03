@@ -40,7 +40,9 @@ class MainWindow(wx.Frame):
         client.search(self.inputarea.GetValue())
         
     def setStatus(self, text):
+        #wx.MutexGuiEnter()
         self.SetStatusText(text)
+        #wx.MutexGuiEnter()
         
     def updateResult(self, url):
         wx.MutexGuiEnter()
@@ -49,13 +51,13 @@ class MainWindow(wx.Frame):
 
 app = wx.App(False)
 frame = MainWindow(None, "PBJ")
-frame.setStatus("Connected to " + str(client.getUpeers()))
 
 def runWindow():
     app.MainLoop()
 
 def main():
     client.connectToNetwork()
+    frame.setStatus("Connected to " + str(client.getUpeers()))
     t=threading.Thread(target=runWindow)
     t.start()
     httpserv.run(client, frame)

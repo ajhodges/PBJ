@@ -27,7 +27,7 @@ done
 
 #22 geckos, but use gecko 22 as gateway
 COUNTER=1
-while [  $COUNTER -lt 22 ]; do
+while [  $COUNTER -lt 20 ]; do
  machines[$MACHINECOUNT]=gecko$COUNTER
  let COUNTER=COUNTER+1 
  let MACHINECOUNT=MACHINECOUNT+1
@@ -36,4 +36,5 @@ done
 for machine in "${machines[@]}";
 do
  ssh -o "StrictHostKeyChecking no" -o "ConnectTimeout=2" $USER@$machine.cs.clemson.edu "cd PBJ ; nohup ./testPBJ.sh $machine && exit" &
+ sleep 0.5
 done
