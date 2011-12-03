@@ -8,6 +8,7 @@ execfile(activate_this, dict(__file__=activate_this))
 import urllib
 import urllib2
 import pickle
+import pbj
 
 #called by peer to register with ultrapeer
 def send_ping(node):
