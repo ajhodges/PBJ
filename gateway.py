@@ -9,6 +9,7 @@ import sys
 import math
 import threading
 import time
+import getopt
 
 from flask import Flask
 from flask import request
@@ -137,9 +138,12 @@ def updatePeerCount():
 
 if __name__ == "__main__":
     
+    options, remainder = getopt.getopt(sys.argv[1:], 'l:')
+    for opt, arg in options:
+        if opt in '-l':
+            PEERS_PER_UPEER = arg
+            print "Setting PEERS_PER_UPEER to " + arg
+
     app.run(host='0.0.0.0', debug=True)    
-    
-
-
 
     #main()

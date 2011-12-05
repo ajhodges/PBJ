@@ -49,18 +49,33 @@ class MainWindow(wx.Frame):
         self.resultsarea.Append(url)
         wx.MutexGuiLeave()
 
-app = wx.App(False)
-frame = MainWindow(None, "PBJ")
+#class runWindow(threading.Thread):
+#    def __init__(self, app):
+#        threading.Thread.__init__(self)
+#        self.app = app
+#    def run(self):
+#        print "here"
+#        self.app.MainLoop()
 
-def runWindow():
-    app.MainLoop()
+class runClient(threading.Thread):
+    def __init__(self, client, frame):
+        threading.Thread.__init__(self)
+        self.client = client
+        self.frame = frame
+    def run(self):
+        httpserv.run(self.client, self.frame)
 
 def main():
+    app = wx.App(False)
+    frame = MainWindow(None, "PBJ")
     client.connectToNetwork()
     frame.setStatus("Connected to " + str(client.getUpeers()))
-    t=threading.Thread(target=runWindow)
-    t.start()
-    httpserv.run(client, frame)
+    #t=runWindow(app)
+    #t.start()
+    c = runClient(client, frame)
+    c.start()
+    #httpserv.run(client, frame)
+    app.MainLoop()
 
 if __name__ == '__main__':
     main()

@@ -18,6 +18,7 @@ class searchReq:
         self.filename = filename
         self.searchid=searchid
         self.requestor=requestor
+        self.timeinit = time.time()
 
 class Client:
     def __init__(self, path='share'):

@@ -3,6 +3,15 @@ A Distributed File Sharing System
 By: Zach Welch, Camden Clements, and Adam Hodges
 ------------------------
 
+Execution
+------------------------
+
+run gateway.py on specified gateway server (gecko22.cs.clemson.edu)
+    -l val   Sets number of peers (leaves) per ultrapeer to val
+
+main.py
+dummy.py
+
 Project Timeline
 ------------------------
 
@@ -16,7 +25,7 @@ Version 0.2
     - develop search algorithm to traverse network from any starting node to search for filename
 
 Version 0.3
-    - design web user interface
+    - design user interface
     - extend graphing program to enhance testing (statistics, routetrace,...)
     - nodes fully scaleable and can crash
     - fetch found file
