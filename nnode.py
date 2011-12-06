@@ -73,7 +73,7 @@ class Node:
 class Network:
     def __init__(self):
         print "Creating Network."
-        self.root = Node('0', True)
+        self.root = Node('A', True)
 
     def findUPeer(self, up):
         if(len(up.peers) < PEERS_PER_UPEER):
@@ -149,7 +149,7 @@ class Network:
 if __name__ == '__main__':
     # create a network and add 10 additional nodes
     n = Network()
-    names = ['A1', 'A2', 'A3', '1', 'B1', 'B2', 'B3', '2', 'C1', 'C2','C3','3','D1','D2','D3','4','E1','E2','E3','5','F1']
+    names = ['A1', 'A2', 'A3', 'B','B1', 'B2', 'B3','C','C1', 'C2', 'C3','D','D1', 'D2', 'D3','E','E1', 'E2', 'E3']
     for i in range(len(names)):
         n.newNode(names[i])   
     
