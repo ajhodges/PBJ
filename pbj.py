@@ -123,7 +123,7 @@ class Client:
             for name in files:
                 if name.lower().find(filename.lower()) != -1:
                     newFile = root + '/' + name
-                    prev,split,post = newFile.partition(share+'/')
+                    prev,split,post = newFile.partition(self.share+'/')
                     foundFiles.append(post)
         return foundFiles
     
