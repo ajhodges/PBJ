@@ -15,29 +15,61 @@ client = Client()
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(500,400))
-        self.control = wx.SplitterWindow(self, style=wx.SP_BORDER)
 
-        #create splitter with search box + button
-        searchbar = wx.SplitterWindow(self.control, style=wx.SP_NOBORDER)
+        # layout components
+        self.panel = wx.Panel(self, -1)
+        self.control = wx.BoxSizer(wx.VERTICAL)
 
-        self.inputarea = wx.TextCtrl(searchbar, style=wx.TE_PROCESS_ENTER)
-        button = wx.Button(searchbar, label="Go")
-        button.Bind(wx.EVT_BUTTON, self.search)
-        
-        searchbar.SplitVertically(self.inputarea, button, -40)
+        # create self.searchbar
+        self.createSearchBar()
 
         #create listbox to store results
-        self.resultsarea = wx.ListBox(self.control)
+        self.resultsarea = wx.ListBox(self.panel, size=(350,200))
+        self.downloadb = wx.Button(self.panel, label="Download")
+        self.downloadb.SetToolTip(wx.ToolTip('Save selected file to /share/'))
+        self.downloadb.Bind(wx.EVT_BUTTON, self.download)
 
         #put search bar on top of listbox
-        self.control.SplitHorizontally(searchbar, self.resultsarea, 30)
+        self.control.AddSpacer((0,5))
+        self.control.Add(self.searchbar, 0, wx.ALIGN_CENTRE)
+        self.control.AddSpacer((0,5))
+        self.control.Add(self.resultsarea, 0, wx.ALIGN_CENTRE)
+        self.control.Add(self.downloadb, 0, wx.ALIGN_CENTRE)
+        self.control.AddSpacer((0,10))
+        
+        self.panel.SetSizer(self.control)
 
         self.CreateStatusBar() # A Statusbar in the bottom of the window
 
         self.Show(True)
+
+        # set size
+        self.control.Fit(self)
+        self.SetSize((400, 300))
+        self.SetMinSize((400,300))
     
+    def createSearchBar(self):
+        # Horizontal sizer
+        self.searchbar = wx.BoxSizer(wx.HORIZONTAL)
+
+        self.text = wx.StaticText(self.panel, label="Search:")
+        self.inputarea = wx.TextCtrl(self.panel, size=wx.Size(250, -1))
+        self.button = wx.Button(self.panel, label="Go")
+        self.button.Bind(wx.EVT_BUTTON, self.search)
+
+        #Add to horizontal sizer
+        self.searchbar.Add(self.text, 0,)
+        self.searchbar.AddSpacer((5,0))
+        self.searchbar.Add(self.inputarea, 1)
+        self.searchbar.AddSpacer((5,0))
+        self.searchbar.Add(self.button, 0)
+
     def search(self, event):
         client.search(self.inputarea.GetValue())
+
+    def download(self, event):
+        if(self.resultsarea.GetSelection() != -1):
+            client.download(self.resultsarea.GetString(self.resultsarea.GetSelection()))
         
     def setStatus(self, text):
         #wx.MutexGuiEnter()

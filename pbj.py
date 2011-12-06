@@ -7,7 +7,8 @@ import pickle
 import time
 import threading
 
-from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found, send_ping, send_gateway_remove_peer
+#from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found, send_ping, send_gateway_remove_peer
+import httpcli as http
 
 GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
 TIME_TO_LIVE = 7
@@ -45,7 +46,7 @@ class Client:
         return upeers
 
     def connectToNetwork(self):
-        data = send_register(GATEWAY_ADDR)
+        data = http.send_register(GATEWAY_ADDR)
         data = pickle.loads(data)
         nodesToPing=()
 
@@ -54,11 +55,11 @@ class Client:
             self.upeers = data['uPeers']
             if self.upeers is not None:
                 for up in self.upeers:
-                    send_imaupeer(up)
+                    http.send_imaupeer(up)
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
-            if send_imapeer(self.upeer) is False:
+            if http.send_imapeer(self.upeer) is False:
                 time.sleep(5)
                 self.reconnect()
         
@@ -72,7 +73,7 @@ class Client:
         self.upeer = None # ultrapeer of node
         self.searchctr = 0
         self.completedSearches = {}
-        data = send_register(GATEWAY_ADDR)
+        data = http.send_register(GATEWAY_ADDR)
         data = pickle.loads(data)
         nodesToPing=()
         if data['isUltra']:
@@ -81,7 +82,7 @@ class Client:
                 self.upeers = data['uPeers']
             if self.upeers is not None:
                 for up in self.upeers:
-                    send_imaupeer(up)
+                    http.send_imaupeer(up)
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
@@ -98,20 +99,20 @@ class Client:
                     print("iterating through upeers")
                     for up in self.upeers:
                         print("pinging upeer "+up)
-                        if(send_ping(up) is False):
+                        if(http.send_ping(up) is False):
                             print("up "+ up + " disconnected")
                             self.upeers.remove(up)
                 if self.peers is not None:
                     print("iterating through peers " + str(self.peers))
                     for p in self.peers:
                         print("pinging peer "+p)
-                        if(send_ping(p) is False):
+                        if(http.send_ping(p) is False):
                             print("p " + p + " disconnected")
                             self.peers.remove(p)
-                            send_gateway_remove_peer(p)
+                            http.send_gateway_remove_peer(p)
                             #update gateway peer count
             else:
-                if(send_ping(self.upeer) is False):
+                if(http.send_ping(self.upeer) is False):
                     print("Lost connection to upeer "+self.upeer+", reconnecting to network.")
                     time.sleep(5)
                     self.reconnect()
@@ -141,21 +142,21 @@ class Client:
                 
             for foundFile in self.checkForFile(req.filename):
                 #found file
-                send_found(req.requestor, foundFile)
+                http.send_found(req.requestor, foundFile)
                 #return
         
         if(self.isUltra):
             if self.peers is not None:
                 for p in self.peers:
-                    send_search(req, p)
+                    http.send_search(req, p)
             
             if self.upeers is not None:    
                 for up in self.upeers:
-                    #send req to connected upeer
-                    send_search(req, up)
+                    #http.send req to connected upeer
+                    http.send_search(req, up)
         else:
             if self.upeer is not req.requestor:
-                send_search(req, self.upeer)
+                http.send_search(req, self.upeer)
 
     def addPeer(self, p):
         print("adding peer "+ p)
@@ -174,3 +175,6 @@ class Client:
         req=searchReq(self.searchctr, filename)
         self.searchctr=self.searchctr+1
         self.handleSearch(req)
+
+    def download(self, path):
+        http.download(os.path.basename(path), path)
