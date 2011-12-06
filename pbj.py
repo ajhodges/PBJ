@@ -86,7 +86,7 @@ class Client:
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
-            if send_imapeer(self.upeer) is False:
+            if http.send_imapeer(self.upeer) is False:
                 time.sleep(5)
                 self.reconnect()
 
