@@ -3,7 +3,7 @@
     Adam Hodges
     Zach Welch
     
-    httpcli.py handles flask and http calls for sending information
+    httpcli.py handles http calls for sending information
 '''
 # activate virtualenv
 import os
@@ -80,13 +80,13 @@ def send_found(requestor, path):
     #print(response.read())
 
 
-def download(filename, url):
+def download(filename, url, dlpath):
     '''called by client after it has a list of results to finally download the file'''
     req=urllib2.Request(url)
     response=urllib2.urlopen(req)
     
     #write the file to the share folder
-    download = open('share/'+filename, "w")
+    download = open(dlpath+'/'+filename, "w")
     download.write(response.read())
     download.close()
     
@@ -99,12 +99,12 @@ def send_gateway_remove_peer(p):
     req=urllib2.Request(url,data)
     response=urllib2.urlopen(req)
 
-def main():
+#def main():
     #--testing functions--
-    send_search(pbj.searchReq(1,"wat.txt"), "localhost")
+    #send_search(pbj.searchReq(1,"wat.txt"), "localhost")
     #report_found(1,"hold.txt", "localhost")
     #download("hold.txt", "http://127.0.0.1:5000/share/hold.txt")
     #register("localhost")
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+#    main()

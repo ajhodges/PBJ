@@ -3,6 +3,9 @@ A Distributed File Sharing System
 By: Zach Welch, Camden Clements, and Adam Hodges
 ------------------------
 
+The PBJ client presents the user with access to our file sharing network.
+Connected users can search, download, and share files across a distributed network.
+
 Execution
 ------------------------
 
@@ -12,7 +15,7 @@ run gateway on specified gateway server (gecko22.cs.clemson.edu)
 
 run pbj on client machine
     main.py - gui version of pbj
-    dummy.py - runs pbj without gui
+    dummy.py [share path] - runs pbj without gui (machines without wx)
 
 
 Dependencies

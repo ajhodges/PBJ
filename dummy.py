@@ -17,6 +17,7 @@ import httpserv
 import threading
 
 if __name__ == '__main__':
+    '''Accept share directory path as an optional argument'''
     if(len(sys.argv)==2):
         client = Client(str(sys.argv[1]))
     else:

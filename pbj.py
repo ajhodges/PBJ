@@ -43,8 +43,9 @@ class Client:
         self.share = path
 
     def __str__(self):
+        '''tostr function''''
         if(self.isUltra):
-            string = "client info:\n  Rank: Ultrapeer\n  Connected ultrapeers: %s\n  Connected peers: %s\n" % (self.upeers, self.peers)
+            string = "Client info:\n  Rank: Ultrapeer\n  Connected ultrapeers: %s\n  Connected peers: %s\n" % (self.upeers, self.peers)
         else:
             string = "Client info:\n  Rank: Peer\n  Connected ultrapeer: %s\n" % self.upeer  
         return string
@@ -149,6 +150,7 @@ class Client:
         return foundFiles
     
     def handleSearch(self, req):
+        '''gets called by flask, universal (recursive) search function'''
         #requestor is null when requestor=self
         if req.requestor is not None:
             req.ttl = req.ttl-1
@@ -201,5 +203,5 @@ class Client:
         self.handleSearch(req)
 
     def download(self, path):
-        '''download file specified by arg path'''
-        http.download(os.path.basename(path), path)
+        '''download file specified by arg path to share directory'''
+        http.download(os.path.basename(path), path, self.share)

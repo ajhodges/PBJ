@@ -128,11 +128,13 @@ class Network:
 pbj = Network()
 @app.route("/register", methods=['GET'])
 def register():
+    '''flask method that new nodes use to register with the network'''
     data=pbj.addPeer(request.remote_addr)
     return pickle.dumps(data)
     
 @app.route("/upeer_remove_peer", methods=['POST'])
 def updatePeerCount():
+    '''flask method that ultranodes use to tell gateway they have lost a node'''
     peer=request.form['peer']
     upeer=request.remote_addr
     pbj.UPeerRemovePeer(upeer, peer)

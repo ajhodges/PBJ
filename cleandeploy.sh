@@ -1,4 +1,5 @@
-#!/bin/bash 
+#!/bin/bash
+#script kills all instances of python on every lab machine
 
 if [ -z "$1" ]; then
  echo "Please supply username."
