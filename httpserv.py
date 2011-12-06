@@ -1,3 +1,11 @@
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    httpserv.py handles flask and http calls for getting information
+'''
+
 # activate virtualenv
 import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")
@@ -17,10 +25,13 @@ app = Flask(__name__)
 
 app.client = None
 
-#--Node Receive Search Request--
-#Ex: curl -d "filename=wat.txt&search_id=1" http://localhost:5000/search
+
 @app.route("/search",methods=['POST'])
 def search():
+    '''
+    --Node Receive Search Request--
+    Ex: curl -d "filename=wat.txt&search_id=1" http://localhost:5000/search
+    '''
     searchreq=request.form['searchreq']
     
     searchreq=pickle.loads(str(searchreq))
@@ -34,16 +45,20 @@ def search():
 
     return searchreq.requestor + " is searching (" + str(searchreq.searchid) + ", " + searchreq.filename+")"
 
-#--Node Receive Download Request--
-#Ex: curl http://localhost:5000/share/wat.txt
 @app.route("/share/<filename>")
 def getfile(filename):
+    '''
+    --Node Receive Download Request--
+    Ex: curl http://localhost:5000/share/wat.txt
+    '''
     return send_from_directory(app.client.share,filename)
 
-#--Client Receive Search Result--
-#Ex: curl -d "path=share/wat.txt&search_id=1" http://localhost:5000/result
 @app.route("/result",methods=['POST'])
 def result():
+    '''
+    --Client Receive Search Result--
+    Ex: curl -d "path=share/wat.txt&search_id=1" http://localhost:5000/result
+    '''
     path=request.form['path']
     ip=request.remote_addr
     url="http://"+ip+":5000/share/"+path
@@ -53,24 +68,32 @@ def result():
         app.window.updateResult(url)
     return url
 
-#--UPeer Notified Of A Peer--
 @app.route("/imapeer", methods=['GET'])
 def regPeer():
-    #add request.remote_addr as a connected peer
+    '''
+    --UPeer Notified Of A Peer--
+    add request.remote_addr as a connected peer
+    '''
     app.client.addPeer(request.remote_addr)
     return "OK!"
     
-#--UPeer Notified Of Another UPeer--
+
 @app.route("/imaupeer", methods=['GET'])
 def regUPeer():
-    #add request.remote_addr as a connected upeer
+    '''
+    --UPeer Notified Of Another UPeer--
+    add request.remote_addr as a connected upeer
+    '''
     app.client.addUPeer(request.remote_addr)
     return "OK!"
 
-#--UPeer Notified Of Another UPeer--
+
 @app.route("/ping", methods=['GET'])
 def ping():
-    #add request.remote_addr as a connected upeer
+    '''
+    --UPeer Notified Of Another UPeer--
+    add request.remote_addr as a connected upeer
+    '''
     return "OK!"
 
 def run(obsClient, obsWindow=None):

@@ -1,3 +1,11 @@
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    pbj.py
+'''
+
 # activate virtualenv
 import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")
@@ -14,7 +22,9 @@ GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
 TIME_TO_LIVE = 7
 
 class searchReq:
+    '''request for a keyword to be passed between nodes'''
     def __init__(self, searchid, filename, requestor=None):
+        '''constructor'''
         self.ttl = TIME_TO_LIVE
         self.filename = filename
         self.searchid=searchid
@@ -22,7 +32,9 @@ class searchReq:
         self.timeinit = time.time()
 
 class Client:
+    '''actual client code for node'''
     def __init__(self, path='share'):
+        '''constructor'''
         self.isUltra = None     # boolean
         self.peers = []   # list of connected peers
         self.upeers = []  # list of connected ultrapeers
@@ -39,6 +51,7 @@ class Client:
         return string
 
     def getUpeers(self):
+        '''return connected ultra peers'''
         if(self.isUltra):
             upeers=self.upeers
         else:
@@ -67,6 +80,7 @@ class Client:
         t.start()    
 
     def reconnect(self):
+        '''reconnect to gateway after lost ultrapeer'''
         self.isUltra = None     # boolean
         self.peers = []   # list of connected peers
         self.upeers = []  # list of connected ultrapeers
@@ -91,6 +105,9 @@ class Client:
                 self.reconnect()
 
     def pingNodes(self):
+        '''ping all connected ultra peers and sub peers, removing them if no reply.
+            if self is not an ultrapeer, reconnect to gateway if lost ultrapeer
+        '''
         while True:
             time.sleep(5)
             print("tick")
@@ -118,6 +135,7 @@ class Client:
                     self.reconnect()
 
     def checkForFile(self,filename):
+        '''search for a file in the share directory'''
         foundFiles = []
         for root, dirs, files in os.walk(self.share):
             for name in files:
@@ -159,6 +177,7 @@ class Client:
                 http.send_search(req, self.upeer)
 
     def addPeer(self, p):
+        '''add a peer to an ultra node'''
         print("adding peer "+ p)
         if self.peers is None:
             self.peers=[p]
@@ -166,6 +185,7 @@ class Client:
             self.peers.append(p)
     
     def addUPeer(self, up):
+        '''connect this ultra peer with another'''
         if self.upeers is None:
             self.upeers=[up]
         else:

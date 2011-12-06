@@ -1,3 +1,11 @@
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    gateway.py contains code for the PBJ gateway, which controls how nodes are
+    added to the network
+'''
 # activate virtualenv
 import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")
@@ -19,7 +27,12 @@ app = Flask(__name__)
 PEERS_PER_UPEER = 2
 lock = threading.Lock()
 class Node:
+    '''gateway representation of a network node'''
     def __init__(self, name, ultraId):
+        '''constructor 
+           name    - IP address of node
+           ultraId - ultra peer ID number (-1 if not an ultra peer)
+        '''
         self.name = name
         if ultraId == -1:
             self.isUltra = False
@@ -31,19 +44,22 @@ class Node:
             self.upeers = {}
 
 class Network:
+    '''gateway representation of entire network'''
     def __init__(self):
+        '''constructor, sets up empty network'''
         self.upeerCount = -1
         self.upeers = {}
         self.outOfOrder = 0
 
     def findUPeer(self):
+        '''returns the ultra peer with an empty sub network slot or None if full'''
         for peer in self.upeers.values():
             if(len(peer.peers.keys()) < PEERS_PER_UPEER):
                 if self.outOfOrder == 0:                 
                     return peer
 
     def linkUPeer(self, up):
-     
+        '''links a ultra peer to all other ultra peers it should be linked with'''
         for ids,curup in self.upeers.items():
             if(up.upeerid - curup.upeerid != 0):
                 if(math.log(math.fabs((up.upeerid - curup.upeerid)), 2) % 2 == 0):
@@ -54,7 +70,10 @@ class Network:
 
   
     def addPeer(self, name):
-        print "ADDING A PEEEEEEEEEEEEEEEEEEEERR"
+        '''process for adding a peer to the network. Checks network for lost nodes
+            before adding new ones
+            name - ip address of new node to be added 
+        '''
         result = {}
         for id,up in self.upeers.items():
             if send_ping(up.name) == False:
@@ -72,7 +91,6 @@ class Network:
                 self.outOfOrder -= 1
                 for i in range(self.upeerCount):
                     if self.upeers.has_key(i) == False:
-                        print "HERE 1"
                       
                         newNode = Node(name, i)
                         self.upeers[i]= newNode
@@ -81,10 +99,6 @@ class Network:
                         print "Node %s added to network as Ultrapeer %d." % (name, newNode.upeerid)
 
                         return result
-            
-
-
-            print "HERE2"
             newNode = Node(name, self.upeerCount)
             self.upeers[self.upeerCount]= newNode
             self.linkUPeer(newNode)
@@ -104,6 +118,7 @@ class Network:
             return result
             
     def UPeerRemovePeer(self, upeer, peer):
+        '''method for removing peer from a upeers sub network'''
         for ids,up in self.upeers.items():
             if(up.name==upeer):
                 del up.peers[peer]

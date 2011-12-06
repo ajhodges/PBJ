@@ -1,3 +1,11 @@
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    main.py executes client code and handles GUI
+'''
+
 # activate virtualenv
 import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")

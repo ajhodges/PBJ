@@ -1,3 +1,11 @@
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    virtualenv.py
+'''
+
 import os, sys
 
 os.system("virtualenv env")

@@ -1,3 +1,10 @@
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    httpcli.py handles flask and http calls for sending information
+'''
 # activate virtualenv
 import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")
@@ -10,8 +17,9 @@ import urllib2
 import pickle
 GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
 
-#called by peer to register with ultrapeer
+
 def send_ping(node):
+    '''called by peer to register with ultrapeer'''
     url="http://"+node+":5000/ping"
     try:
         req=urllib2.Request(url)
@@ -20,15 +28,17 @@ def send_ping(node):
     except Exception:
         return False
 
-#called by node to register with gateway, returns pickle obj
+
 def send_register(gateway):
+    '''called by node to register with gateway, returns pickle obj'''
     url="http://"+gateway+":5000/register"
     req=urllib2.Request(url)
     response=urllib2.urlopen(req)
     return(response.read())
     
-#called by peer to register with ultrapeer
+
 def send_imapeer(upeer):
+    '''called by peer to register with ultrapeer'''
     url="http://"+upeer+":5000/imapeer"
     try:
         req=urllib2.Request(url)
@@ -37,8 +47,9 @@ def send_imapeer(upeer):
     except Exception:
         return False
 
-#called by ultrapeer to register with ultrapeer
+
 def send_imaupeer(upeer):
+    '''called by ultrapeer to register with another ultrapeer'''
     url="http://"+upeer+":5000/imaupeer"
     try:
         req=urllib2.Request(url)
@@ -47,8 +58,9 @@ def send_imaupeer(upeer):
     except Exception:
         return False
     
-#used to initiate/propagate a search request
+
 def send_search(searchreq, superpeerip):
+    '''used to initiate/propagate a search request'''
     url="http://"+superpeerip+":5000/search"
     values={'searchreq':pickle.dumps(searchreq)}
     
@@ -57,8 +69,9 @@ def send_search(searchreq, superpeerip):
     response=urllib2.urlopen(req)
     #print(response.read())
 
-#called by node if the file has been found
+
 def send_found(requestor, path):
+    '''called by node if the file has been found'''
     url="http://"+requestor+":5000/result"
     values={'path':path}
     data=urllib.urlencode(values)
@@ -66,8 +79,9 @@ def send_found(requestor, path):
     response=urllib2.urlopen(req)
     #print(response.read())
 
-#called by client after it has a list of results to finally download the file
+
 def download(filename, url):
+    '''called by client after it has a list of results to finally download the file'''
     req=urllib2.Request(url)
     response=urllib2.urlopen(req)
     
@@ -76,8 +90,9 @@ def download(filename, url):
     download.write(response.read())
     download.close()
     
-#called by ultrapeer to u
+
 def send_gateway_remove_peer(p):
+    '''called by ultrapeer to u'''
     url="http://"+GATEWAY_ADDR+":5000/upeer_remove_peer"
     values={'peer':p}
     data=urllib.urlencode(values)

@@ -1,3 +1,11 @@
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    dummy.py excecutes a GUIless client, used for building a test network 
+'''
+
 # activate virtualenv
 import os, sys
 activate_this = os.path.expanduser("env/bin/activate_this.py")

@@ -1,4 +1,14 @@
 # activate virtualenv
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    nnode.py simulates the network being built and creates a png visualization
+    of the network. Used in designing system and algorithms
+    '''
+
+
 import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")
 execfile(activate_this, dict(__file__=activate_this))

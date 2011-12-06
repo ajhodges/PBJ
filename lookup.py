@@ -1,3 +1,11 @@
+''' PBJ
+    Camden Clements
+    Adam Hodges
+    Zach Welch
+    
+    lookup.py is a proof of concept for searching the share directory
+'''
+
 # activate virtualenv
 import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")
