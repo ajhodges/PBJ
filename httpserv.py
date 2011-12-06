@@ -38,7 +38,7 @@ def search():
 #Ex: curl http://localhost:5000/share/wat.txt
 @app.route("/share/<filename>")
 def getfile(filename):
-    return send_from_directory('share',filename)
+    return send_from_directory(app.client.share,filename)
 
 #--Client Receive Search Result--
 #Ex: curl -d "path=share/wat.txt&search_id=1" http://localhost:5000/result
