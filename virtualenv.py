@@ -3,7 +3,7 @@
     Adam Hodges
     Zach Welch
     
-    virtualenv.py
+    virtualenv.py - used to set up our virtual environment with flask
 '''
 
 import os, sys

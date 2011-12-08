@@ -11,7 +11,6 @@ import os
 activate_this = os.path.expanduser("env/bin/activate_this.py")
 execfile(activate_this, dict(__file__=activate_this))
 
-#import socket
 import pickle
 import sys
 import math
@@ -25,7 +24,7 @@ from httpcli import send_ping
 app = Flask(__name__)
 
 PEERS_PER_UPEER = 2
-lock = threading.Lock()
+
 class Node:
     '''gateway representation of a network node'''
     def __init__(self, name, ultraId):
@@ -52,7 +51,7 @@ class Network:
         self.outOfOrder = 0
 
     def findUPeer(self):
-        '''returns the ultra peer with an empty sub network slot or None if full'''
+        '''returns the ultra peer with an empty sub network slot or None if all ultra peers are full'''
         for peer in self.upeers.values():
             if(len(peer.peers.keys()) < PEERS_PER_UPEER):
                 if self.outOfOrder == 0:                 
@@ -66,8 +65,6 @@ class Network:
                     print "Linking ultrapeers %d and %d." % (curup.upeerid, up.upeerid)
                     up.upeers[curup.name] = curup
                     curup.upeers[up.name] = up
-
-
   
     def addPeer(self, name):
         '''process for adding a peer to the network. Checks network for lost nodes
@@ -75,6 +72,8 @@ class Network:
             name - ip address of new node to be added 
         '''
         result = {}
+
+        # ping ultrapeers to verify network
         for id,up in self.upeers.items():
             if send_ping(up.name) == False:
                 print "Lost Ultrapeer ", id
@@ -82,23 +81,24 @@ class Network:
                 self.outOfOrder += 1
                 self.upeerCount -= 1
 
-
         upeer = self.findUPeer()
         if upeer is None:
+            # new peer is ultra peer
             result['isUltra'] = True
             self.upeerCount += 1
+            
+            # adjust ultrapeers
             if  self.outOfOrder != 0:
                 self.outOfOrder -= 1
                 for i in range(self.upeerCount):
                     if self.upeers.has_key(i) == False:
-                      
                         newNode = Node(name, i)
                         self.upeers[i]= newNode
                         self.linkUPeer(newNode)
                         result['uPeers'] = newNode.upeers.keys()
                         print "Node %s added to network as Ultrapeer %d." % (name, newNode.upeerid)
-
                         return result
+            # put new upeer at end of upeers
             newNode = Node(name, self.upeerCount)
             self.upeers[self.upeerCount]= newNode
             self.linkUPeer(newNode)
@@ -108,6 +108,7 @@ class Network:
             return result
             
         else:
+            # new peer is not an ultra peer
             newNode = Node(name, -1)
             newNode.upeer = upeer
             upeer.peers[name] = newNode
@@ -124,41 +125,20 @@ class Network:
                 del up.peers[peer]
         #set upeer's count to count
 
-#def main():
-#    pbj = Network()
-#
-#    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-#    sock.bind(('', 5555))
-#    sock.listen(1)    
-#    while True:
-#        conn, addr = sock.accept()threading.unlock()
-#        result = pbj.addPeer(addr[0])
-#        result = pickle.dumps(result)
-#        conn.send(result)
-#        conn.close()
-
 pbj = Network()
 @app.route("/register", methods=['GET'])
 def register():
+    '''flask method that new nodes use to register with the network'''
     data=pbj.addPeer(request.remote_addr)
     return pickle.dumps(data)
     
 @app.route("/upeer_remove_peer", methods=['POST'])
 def updatePeerCount():
+    '''flask method that ultranodes use to tell gateway they have lost a node'''
     peer=request.form['peer']
     upeer=request.remote_addr
     pbj.UPeerRemovePeer(upeer, peer)
     return "OK"
 
 if __name__ == "__main__":
-    
-    options, remainder = getopt.getopt(sys.argv[1:], 'l:')
-    for opt, arg in options:
-        if opt in '-l':
-            PEERS_PER_UPEER = arg
-            print "Setting PEERS_PER_UPEER to " + arg
-
     app.run(host='0.0.0.0', debug=True)    
-
-    #main()

@@ -20,6 +20,7 @@ import time
 import getopt
 
 import wx
+import pygraphviz as pgv
 
 from flask import Flask
 from flask import request
@@ -39,6 +40,13 @@ class Node:
             self.upeerid = ultraId
             self.peers = {}
             self.upeers = {}
+
+    def getName(self):
+        return self.name
+    def getPeers(self):
+        return self.peers
+    def getUpeers(self):
+        return self.upeers
 
 class Network:
     def __init__(self):
@@ -112,11 +120,6 @@ class Network:
             print "Node %s added to network under Ultrapeer %s" % (name, upeer.upeerid)
 
             return result
-       
-        G = pgv.AGraph()
-        self.makeGraph(G)
-        G.layout()
-        G.draw('file.png')
             
     def UPeerRemovePeer(self, upeer, peer):
         for ids,up in self.upeers.items():
@@ -124,28 +127,27 @@ class Network:
                 del up.peers[peer]
         #set upeer's count to count
 
-    def makeSubGraph(self,uPeer,Graph,Visited):
-        for subPeer in uPeer.getPeers():
-            Graph.add_node(subPeer.getName())
+    def makeSubGraph(self,uPeer,Graph):
+        for subPeer in uPeer.getPeers().values():
+            Graph.add_node(subPeer.getName(), color='yellow')
             Graph.add_edge(uPeer.getName(),subPeer.getName())
-        hold = uPeer.getUpeers()
-        if hold != {}:
-            for key in hold.keys():
-                if key > 0:
-                    Graph.add_node(uPeer.upeers[key].getName())
-                    Graph.add_edge(uPeer.getName(),uPeer.upeers[key].getName())
-            if uPeer.upeers.has_key(1):
-                self.makeSubGraph(uPeer.upeers[1],Graph,Visited)
+        for upeer in uPeer.getUpeers().values():
+            Graph.add_edge(uPeer.getName(),upeer.getName())
 
     def makeGraph(self,Graph):
-        Graph.add_node(self.root.getName())
-        visited = []
-        self.makeSubGraph(self.root,Graph,visited)
+        for upeer in self.upeers.values():
+            Graph.add_node(upeer.getName(), color='red')
+        for upeer in self.upeers.values():
+            self.makeSubGraph(upeer,Graph)
 
 pbj = Network()
 @app.route("/register", methods=['GET'])
 def register():
     data=pbj.addPeer(request.remote_addr)
+    G = pgv.AGraph()
+    pbj.makeGraph(G)
+    G.layout()
+    G.draw('file.png')
     return pickle.dumps(data)
     
 @app.route("/upeer_remove_peer", methods=['POST'])
@@ -158,12 +160,17 @@ def updatePeerCount():
 class MyFrame(wx.Frame):
     def __init__(self, parent, id, title):
         wx.Frame.__init__(self, parent, id, title)
-        self.bitmap = wx.Bitmap('file.png')
+        # problems refreshing image
         wx.EVT_PAINT(self, self.OnPaint)
+        self.Bind(wx.EVT_MOVE, self.OnPaint)
         self.Centre()
+        self.SetSize((400,300))
     def OnPaint(self, event):
+        self.ClearBackground()
+        # need a thread lock on this image file here and up in register
+        self.bitmap = wx.Bitmap('file.png')
         dc = wx.PaintDC(self)
-        dc.DrawBitmap(self.bitmap, 60, 20)
+        dc.DrawBitmap(self.bitmap, 0, 0)
 
 class displayApp(wx.App):
     def OnInit(self):
@@ -180,14 +187,6 @@ class display(threading.Thread):
         self.app.MainLoop()    
 
 if __name__ == "__main__":
-    
-    options, remainder = getopt.getopt(sys.argv[1:], 'l:')
-    for opt, arg in options:
-        if opt in '-l':
-            PEERS_PER_UPEER = arg
-            print "Setting PEERS_PER_UPEER to " + arg
     a = display(app)
     a.start()
-    app.run(host='0.0.0.0', port=5001, debug=True)    
-    print 'q'
-    #main()
+    app.run(host='0.0.0.0', debug=True)    

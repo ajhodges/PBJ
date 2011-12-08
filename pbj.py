@@ -15,7 +15,6 @@ import pickle
 import time
 import threading
 
-#from httpcli import send_register, send_search, send_imapeer, send_imaupeer, send_found, send_ping, send_gateway_remove_peer
 import httpcli as http
 
 GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
@@ -44,8 +43,9 @@ class Client:
         self.share = path
 
     def __str__(self):
+        '''tostr function''''
         if(self.isUltra):
-            string = "client info:\n  Rank: Ultrapeer\n  Connected ultrapeers: %s\n  Connected peers: %s\n" % (self.upeers, self.peers)
+            string = "Client info:\n  Rank: Ultrapeer\n  Connected ultrapeers: %s\n  Connected peers: %s\n" % (self.upeers, self.peers)
         else:
             string = "Client info:\n  Rank: Peer\n  Connected ultrapeer: %s\n" % self.upeer  
         return string
@@ -59,19 +59,23 @@ class Client:
         return upeers
 
     def connectToNetwork(self):
+        '''Establish connectiong with gateway and process result'''
         data = http.send_register(GATEWAY_ADDR)
         data = pickle.loads(data)
-        nodesToPing=()
 
         if data['isUltra']:
+            # node is an ultrapeer
             self.isUltra = True
             self.upeers = data['uPeers']
+            # connect to listed ultrapeers
             if self.upeers is not None:
                 for up in self.upeers:
                     http.send_imaupeer(up)
         else:
+            # node is not ultrapeer
             self.isUltra = False
             self.upeer = data['uPeer']
+            # connect to listed ultrapeer
             if http.send_imapeer(self.upeer) is False:
                 time.sleep(5)
                 self.reconnect()
@@ -89,7 +93,7 @@ class Client:
         self.completedSearches = {}
         data = http.send_register(GATEWAY_ADDR)
         data = pickle.loads(data)
-        nodesToPing=()
+
         if data['isUltra']:
             self.isUltra = True
             if data['uPeers'] is not None:
@@ -146,6 +150,7 @@ class Client:
         return foundFiles
     
     def handleSearch(self, req):
+        '''gets called by flask, universal (recursive) search function'''
         #requestor is null when requestor=self
         if req.requestor is not None:
             req.ttl = req.ttl-1
@@ -192,9 +197,11 @@ class Client:
             self.upeers.append(up)
 
     def search(self, filename):
+        '''create search request for filename'''
         req=searchReq(self.searchctr, filename)
         self.searchctr=self.searchctr+1
         self.handleSearch(req)
 
     def download(self, path):
-        http.download(os.path.basename(path), path)
+        '''download file specified by arg path to share directory'''
+        http.download(os.path.basename(path), path, self.share)

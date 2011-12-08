@@ -1,4 +1,5 @@
-#!/bin/bash 
+#!/bin/bash
+#script that executes testPBJ.sh on every lab machine (to start dummy nodes)
 
 if [ -z "$1" ]; then
  echo "Please supply username."

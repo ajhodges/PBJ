@@ -1,4 +1,5 @@
 #!/bin/bash
+#run dummy.py with a sharepath that corresponds to the name of the machine (passed in as an argument)
 
 if [ -z "$1" ]; then
  echo "Please supply machine name."

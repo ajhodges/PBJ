@@ -22,6 +22,7 @@ client = Client()
 
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
+        '''Initialize the GUI'''
         wx.Frame.__init__(self, parent, title=title, size=(500,400))
 
         # layout components
@@ -57,6 +58,7 @@ class MainWindow(wx.Frame):
         self.SetMinSize((400,300))
     
     def createSearchBar(self):
+        '''Create the search bar GUI element'''
         # Horizontal sizer
         self.searchbar = wx.BoxSizer(wx.HORIZONTAL)
 
@@ -73,29 +75,25 @@ class MainWindow(wx.Frame):
         self.searchbar.Add(self.button, 0)
 
     def search(self, event):
+        '''Function to hook button event to PBJ client instance'''
         client.search(self.inputarea.GetValue())
 
     def download(self, event):
+        '''Function to hook button event to file download'''
         if(self.resultsarea.GetSelection() != -1):
             client.download(self.resultsarea.GetString(self.resultsarea.GetSelection()))
         
     def setStatus(self, text):
+        '''Update status bar text'''
         #wx.MutexGuiEnter()
         self.SetStatusText(text)
         #wx.MutexGuiEnter()
         
     def updateResult(self, url):
+        '''Add a result to the listbox'''
         wx.MutexGuiEnter()
         self.resultsarea.Append(url)
         wx.MutexGuiLeave()
-
-#class runWindow(threading.Thread):
-#    def __init__(self, app):
-#        threading.Thread.__init__(self)
-#        self.app = app
-#    def run(self):
-#        print "here"
-#        self.app.MainLoop()
 
 class runClient(threading.Thread):
     def __init__(self, client, frame):
@@ -110,11 +108,10 @@ def main():
     frame = MainWindow(None, "PBJ")
     client.connectToNetwork()
     frame.setStatus("Connected to " + str(client.getUpeers()))
-    #t=runWindow(app)
-    #t.start()
+
     c = runClient(client, frame)
     c.start()
-    #httpserv.run(client, frame)
+  
     app.MainLoop()
 
 if __name__ == '__main__':
