@@ -43,7 +43,7 @@ class Client:
         self.share = path
 
     def __str__(self):
-        '''tostr function''''
+        '''tostr function'''
         if(self.isUltra):
             string = "Client info:\n  Rank: Ultrapeer\n  Connected ultrapeers: %s\n  Connected peers: %s\n" % (self.upeers, self.peers)
         else:
