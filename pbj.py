@@ -17,7 +17,7 @@ import threading
 
 import httpcli as http
 
-GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
+GATEWAY_ADDR = '10.125.5.249'
 TIME_TO_LIVE = 7
 
 class searchReq:
