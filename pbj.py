@@ -27,7 +27,7 @@ class searchReq:
         self.ttl = TIME_TO_LIVE
         self.filename = filename
         self.searchid=searchid
-        self.requestorip=requestor
+        self.requestor=requestor
         self.requestorport=port
         self.timeinit = time.time()
         self.hops = 0
