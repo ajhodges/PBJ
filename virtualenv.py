@@ -17,3 +17,4 @@ execfile(activate_this, dict(__file__=activate_this))
 from setuptools.command import easy_install
 
 easy_install.main( ["-U","flask"] )
+easy_install.main( ["-U","argparse"] )
