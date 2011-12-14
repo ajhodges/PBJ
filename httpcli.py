@@ -70,10 +70,10 @@ def send_search(searchreq, superpeerip):
     #print(response.read())
 
 
-def send_found(requestor, path):
+def send_found(request):
     '''called by node if the file has been found'''
-    url="http://"+requestor+":5000/result"
-    values={'path':path}
+    url="http://"+request.requestor+":5000/result"
+    values={'result':pickle.dumps(request)}
     data=urllib.urlencode(values)
     req=urllib2.Request(url,data)
     response=urllib2.urlopen(req)

@@ -16,7 +16,7 @@ import sys
 import math
 import threading
 import time
-import getopt
+import argparse
 
 from flask import Flask
 from flask import request
@@ -53,7 +53,7 @@ class Network:
     def findUPeer(self):
         '''returns the ultra peer with an empty sub network slot or None if all ultra peers are full'''
         for peer in self.upeers.values():
-            if(len(peer.peers.keys()) < PEERS_PER_UPEER):
+            if(len(peer.peers.keys()) < self.ppup):
                 if self.outOfOrder == 0:                 
                     return peer
 
@@ -67,6 +67,7 @@ class Network:
                     curup.upeers[up.name] = up
   
     def addPeer(self, name):
+        print self.ppup
         '''process for adding a peer to the network. Checks network for lost nodes
             before adding new ones
             name - ip address of new node to be added 
@@ -141,4 +142,9 @@ def updatePeerCount():
     return "OK"
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Run the gateway server')
+    parser.add_argument('-l', action="store", dest="ppup", default=PEERS_PER_UPEER, help='Set number of peers per ultra peer', type=int)
+    arg_results = parser.parse_args()
+    pbj.ppup = arg_results.ppup
+    
     app.run(host='0.0.0.0', debug=True)    
