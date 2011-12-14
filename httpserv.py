@@ -77,7 +77,7 @@ def regPeer():
     --UPeer Notified Of A Peer--
     add request.remote_addr as a connected peer
     '''
-    app.client.addPeer(request.remote_addr, request.args.get('port'))
+    app.client.addPeer(request.remote_addr+":"+request.args.get('port'))
     return "OK!"
     
 
@@ -87,7 +87,7 @@ def regUPeer():
     --UPeer Notified Of Another UPeer--
     add request.remote_addr as a connected upeer
     '''
-    app.client.addUPeer(request.remote_addr, request.args.get('port'))
+    app.client.addUPeer(request.remote_addr + ":"+ request.args.get('port'))
     return "OK!"
 
 

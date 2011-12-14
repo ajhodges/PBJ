@@ -180,7 +180,7 @@ class Client:
             if self.upeer is not req.requestor:
                 http.send_search(req, self.upeer)
 
-    def addPeer(self, p, ):
+    def addPeer(self, p):
         '''add a peer to an ultra node'''
         print("adding peer "+ p)
         if self.peers is None:
