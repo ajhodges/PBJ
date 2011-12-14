@@ -45,14 +45,6 @@ class Client:
         self.share = path
         self.port = port
 
-    def __str__(self):
-        '''tostr function'''
-        if(self.isUltra):
-            string = "Client info:\n  Rank: Ultrapeer\n  Connected ultrapeers: %s\n  Connected peers: %s\n" % (self.upeers, self.peers)
-        else:
-            string = "Client info:\n  Rank: Peer\n  Connected ultrapeer: %s\n" % self.upeer  
-        return string
-
     def getUpeers(self):
         '''return connected ultra peers'''
         if(self.isUltra):
@@ -63,7 +55,7 @@ class Client:
 
     def connectToNetwork(self):
         '''Establish connection with gateway and process result'''
-        data = http.send_register(GATEWAY_ADDR)
+        data = http.send_register(self.port, GATEWAY_ADDR)
         data = pickle.loads(data)
 
         if data['isUltra']:
@@ -82,7 +74,6 @@ class Client:
             if http.send_imapeer(self.port, self.upeer) is False:
                 time.sleep(5)
                 self.reconnect()
-        
         t=threading.Thread(target=self.pingNodes)
         t.start()    
 
@@ -104,6 +95,7 @@ class Client:
             if self.upeers is not None:
                 for up in self.upeers:
                     http.send_imaupeer(self.port, up)
+
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
@@ -111,11 +103,13 @@ class Client:
                 time.sleep(5)
                 self.reconnect()
 
+
     def pingNodes(self):
         '''ping all connected ultra peers and sub peers, removing them if no reply.
             if self is not an ultrapeer, reconnect to gateway if lost ultrapeer
         '''
         while True:
+
             time.sleep(5)
             print("tick")
             if(self.isUltra):

@@ -107,11 +107,12 @@ def main():
     app = wx.App(False)
     frame = MainWindow(None, "PBJ")
     client.connectToNetwork()
+
     frame.setStatus("Connected to " + str(client.getUpeers()))
 
     c = runClient(client, frame)
     c.start()
-  
+
     app.MainLoop()
 
 if __name__ == '__main__':
