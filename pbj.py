@@ -85,7 +85,7 @@ class Client:
         self.upeer = None # ultrapeer of node
         self.searchctr = 0
         self.completedSearches = {}
-        data = http.send_register(GATEWAY_ADDR)
+        data = http.send_register(self.port, GATEWAY_ADDR)
         data = pickle.loads(data)
 
         if data['isUltra']:
