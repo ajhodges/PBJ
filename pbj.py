@@ -17,7 +17,7 @@ import threading
 
 import httpcli as http
 
-GATEWAY_ADDR = '10.125.5.249'
+GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
 TIME_TO_LIVE = 7
 
 class searchReq:
@@ -28,7 +28,9 @@ class searchReq:
         self.filename = filename
         self.searchid=searchid
         self.requestor=requestor
+        self.path = None
         self.timeinit = time.time()
+        self.hops = 0
 
 class Client:
     '''actual client code for node'''
@@ -154,6 +156,7 @@ class Client:
         #requestor is null when requestor=self
         if req.requestor is not None:
             req.ttl = req.ttl-1
+            req.hops = req.hops+1
 
             if(req.requestor not in self.completedSearches):
                 self.completedSearches[req.requestor]=[]
@@ -165,7 +168,8 @@ class Client:
                 
             for foundFile in self.checkForFile(req.filename):
                 #found file
-                http.send_found(req.requestor, foundFile)
+                req.path = foundFile
+                http.send_found(req)
                 #return
         
         if(self.isUltra):
