@@ -30,6 +30,7 @@ class searchReq:
         self.requestorip=requestor
         self.requestorport=port
         self.timeinit = time.time()
+        self.hops = 0
 
 class Client:
     '''actual client code for node'''
@@ -45,7 +46,7 @@ class Client:
         self.port = port
 
     def __str__(self):
-        '''tostr function''''
+        '''tostr function'''
         if(self.isUltra):
             string = "Client info:\n  Rank: Ultrapeer\n  Connected ultrapeers: %s\n  Connected peers: %s\n" % (self.upeers, self.peers)
         else:
@@ -156,6 +157,7 @@ class Client:
         #requestor is null when requestor=self
         if req.requestor is not None:
             req.ttl = req.ttl-1
+            req.hops = req.hops+1
 
             if(req.requestor not in self.completedSearches):
                 self.completedSearches[req.requestor]=[]
@@ -167,7 +169,8 @@ class Client:
                 
             for foundFile in self.checkForFile(req.filename):
                 #found file
-                http.send_found(req.requestor, foundFile)
+                req.path = foundFile
+                http.send_found(req)
                 #return
         
         if(self.isUltra):

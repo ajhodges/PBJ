@@ -59,7 +59,10 @@ def result():
     --Client Receive Search Result--
     Ex: curl -d "path=share/wat.txt&search_id=1" http://localhost:5000/result
     '''
-    path=request.form['path']
+    result = request.form['result']
+    result = pickle.loads(str(result))
+    path = result.path
+    print "%i hops this time." % result.hops
     ip=request.remote_addr
     url="http://"+ip+":5000/share/"+path
     #add url/ip to list of results
