@@ -22,12 +22,12 @@ TIME_TO_LIVE = 7
 
 class searchReq:
     '''request for a keyword to be passed between nodes'''
-    def __init__(self, searchid, filename, requestor=None, port=None):
+    def __init__(self, searchid, filename, port=None):
         '''constructor'''
         self.ttl = TIME_TO_LIVE
         self.filename = filename
         self.searchid=searchid
-        self.requestor=requestor
+        self.requestor=None
         self.requestorport=port
         self.timeinit = time.time()
         self.hops = 0
@@ -197,7 +197,7 @@ class Client:
 
     def search(self, filename):
         '''create search request for filename'''
-        req=searchReq(self.searchctr, filename)
+        req=searchReq(self.searchctr, filename, self.port)
         self.searchctr=self.searchctr+1
         self.handleSearch(req)
 
