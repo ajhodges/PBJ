@@ -18,7 +18,7 @@ import threading
 
 import httpserv
 
-client = Client()
+client = Client('share', '5000')
 
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):

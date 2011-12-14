@@ -62,7 +62,7 @@ class Client:
         return upeers
 
     def connectToNetwork(self):
-        '''Establish connectiong with gateway and process result'''
+        '''Establish connection with gateway and process result'''
         data = http.send_register(GATEWAY_ADDR)
         data = pickle.loads(data)
 
@@ -73,13 +73,13 @@ class Client:
             # connect to listed ultrapeers
             if self.upeers is not None:
                 for up in self.upeers:
-                    http.send_imaupeer(up)
+                    http.send_imaupeer(self.port, up)
         else:
             # node is not ultrapeer
             self.isUltra = False
             self.upeer = data['uPeer']
             # connect to listed ultrapeer
-            if http.send_imapeer(self.upeer) is False:
+            if http.send_imapeer(self.port, self.upeer) is False:
                 time.sleep(5)
                 self.reconnect()
         
@@ -103,11 +103,11 @@ class Client:
                 self.upeers = data['uPeers']
             if self.upeers is not None:
                 for up in self.upeers:
-                    http.send_imaupeer(up)
+                    http.send_imaupeer(self.port, up)
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
-            if http.send_imapeer(self.upeer) is False:
+            if http.send_imapeer(self.port, self.upeer) is False:
                 time.sleep(5)
                 self.reconnect()
 
@@ -170,7 +170,7 @@ class Client:
             for foundFile in self.checkForFile(req.filename):
                 #found file
                 req.path = foundFile
-                http.send_found(req)
+                http.send_found(self.port, req)
                 #return
         
         if(self.isUltra):

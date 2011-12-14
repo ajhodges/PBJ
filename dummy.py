@@ -19,9 +19,9 @@ import threading
 if __name__ == '__main__':
     '''Accept share directory path as an optional argument'''
     if(len(sys.argv)==2):
-        client = Client(str(sys.argv[1]))
+        client = Client(str(sys.argv[1]), '5000')
     else:
-        client = Client()
+        client = Client('share', '5000')
     client.connectToNetwork()
     httpserv.run(client)
 

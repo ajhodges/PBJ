@@ -67,12 +67,7 @@ class Network:
                     up.upeers[curup.name] = curup
                     curup.upeers[up.name] = up
   
-<<<<<<< HEAD
     def addPeer(self, name, port):
-=======
-    def addPeer(self, name):
-        print self.ppup
->>>>>>> 94f3d25a44d858189ad81d16d16a576aca0fe903
         '''process for adding a peer to the network. Checks network for lost nodes
             before adding new ones
             name - ip address of new node to be added

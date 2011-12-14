@@ -64,7 +64,7 @@ def result():
     path = result.path
     print "%i hops this time." % result.hops
     ip=request.remote_addr
-    url="http://"+ip+":5000/share/"+path
+    url="http://"+ip+":"+request.form['port']+"/share/"+path
     #add url/ip to list of results
     
     if(app.window is not None):
