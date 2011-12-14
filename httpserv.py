@@ -74,7 +74,7 @@ def regPeer():
     --UPeer Notified Of A Peer--
     add request.remote_addr as a connected peer
     '''
-    app.client.addPeer(request.remote_addr)
+    app.client.addPeer(request.remote_addr, request.args.get('port'))
     return "OK!"
     
 
@@ -84,7 +84,7 @@ def regUPeer():
     --UPeer Notified Of Another UPeer--
     add request.remote_addr as a connected upeer
     '''
-    app.client.addUPeer(request.remote_addr)
+    app.client.addUPeer(request.remote_addr, request.args.get('port'))
     return "OK!"
 
 
@@ -102,5 +102,5 @@ def run(obsClient, obsWindow=None):
     app.logger.addHandler(hdlr)
     app.client=obsClient
     app.window=obsWindow
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', port=obsClient.port)
     

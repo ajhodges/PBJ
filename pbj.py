@@ -22,17 +22,18 @@ TIME_TO_LIVE = 7
 
 class searchReq:
     '''request for a keyword to be passed between nodes'''
-    def __init__(self, searchid, filename, requestor=None):
+    def __init__(self, searchid, filename, requestor=None, port=None):
         '''constructor'''
         self.ttl = TIME_TO_LIVE
         self.filename = filename
         self.searchid=searchid
-        self.requestor=requestor
+        self.requestorip=requestor
+        self.requestorport=port
         self.timeinit = time.time()
 
 class Client:
     '''actual client code for node'''
-    def __init__(self, path='share'):
+    def __init__(self, path='share', port=5000):
         '''constructor'''
         self.isUltra = None     # boolean
         self.peers = []   # list of connected peers
@@ -41,6 +42,7 @@ class Client:
         self.searchctr = 0
         self.completedSearches = {}
         self.share = path
+        self.port = port
 
     def __str__(self):
         '''tostr function''''
@@ -181,7 +183,7 @@ class Client:
             if self.upeer is not req.requestor:
                 http.send_search(req, self.upeer)
 
-    def addPeer(self, p):
+    def addPeer(self, p, ):
         '''add a peer to an ultra node'''
         print("adding peer "+ p)
         if self.peers is None:
