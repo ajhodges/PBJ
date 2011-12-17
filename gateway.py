@@ -96,6 +96,7 @@ class Network:
                         self.upeers[i]= newNode
                         self.linkUPeer(newNode)
                         result['uPeers'] = newNode.upeers.keys()
+                        result['upId'] = newNode.upeerid
                         print "Node %s added to network as Ultrapeer %d." % (name, newNode.upeerid)
                         return result
             # put new upeer at end of upeers
@@ -103,6 +104,7 @@ class Network:
             self.upeers[self.upeerCount]= newNode
             self.linkUPeer(newNode)
             result['uPeers'] = newNode.upeers.keys()
+            result['upId'] = newNode.upeerid
             print "Node %s added to network as Ultrapeer %d." % (name, newNode.upeerid)
 
             return result

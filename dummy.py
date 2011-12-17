@@ -13,8 +13,16 @@ execfile(activate_this, dict(__file__=activate_this))
 
 from pbj import Client
 import httpserv
-
+import csv
 import threading
+import time
+
+class dummyClass:
+    def __init__(self):
+        self.csvwriter=csv.writer(open("results.csv", "wb"))
+
+    def updateResult(self, url, searchresult):
+        csvwriter.writerow([searchresult.searchid, searchresult.timeinit, time.time(), searchrequest.ttl, searchrequest.lastUltranode, url])
 
 if __name__ == '__main__':
     '''Accept share directory path as an optional argument'''
@@ -22,6 +30,8 @@ if __name__ == '__main__':
         client = Client(str(sys.argv[1]))
     else:
         client = Client()
+        dummy = dummyClass()
+
     client.connectToNetwork()
-    httpserv.run(client)
+    httpserv.run(client, obsDummy=dummy)
 

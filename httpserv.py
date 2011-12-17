@@ -25,6 +25,11 @@ app = Flask(__name__)
 
 app.client = None
 
+@app.route("/tellsearch",methods=['POST'])
+def tellsearch():
+    searchterm=request.form['searchterm']
+    app.client.search(searchterm)
+    return "ok"
 
 @app.route("/search",methods=['POST'])
 def search():
@@ -59,6 +64,9 @@ def result():
     --Client Receive Search Result--
     Ex: curl -d "path=share/wat.txt&search_id=1" http://localhost:5000/result
     '''
+    searchreq=request.form['searchreq']
+    searchreq=pickle.loads(str(searchreq))
+
     path=request.form['path']
     ip=request.remote_addr
     url="http://"+ip+":5000/share/"+path
@@ -66,6 +74,9 @@ def result():
     
     if(app.window is not None):
         app.window.updateResult(url)
+    if(app.dummy is not None):
+        app.dummy.updateResult(url, searchreq)
+
     return url
 
 @app.route("/imapeer", methods=['GET'])
@@ -96,11 +107,12 @@ def ping():
     '''
     return "OK!"
 
-def run(obsClient, obsWindow=None):
+def run(obsClient, obsWindow=None, obsDummy=None):
     import logging
     hdlr=logging.FileHandler('flask.log')
     app.logger.addHandler(hdlr)
     app.client=obsClient
     app.window=obsWindow
+    app.dummy=obsDummy
     app.run(host='0.0.0.0')
     

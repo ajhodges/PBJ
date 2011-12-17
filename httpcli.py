@@ -15,7 +15,7 @@ execfile(activate_this, dict(__file__=activate_this))
 import urllib
 import urllib2
 import pickle
-GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
+GATEWAY_ADDR = '10.125.5.149'
 
 
 def send_ping(node):
@@ -70,10 +70,11 @@ def send_search(searchreq, superpeerip):
     #print(response.read())
 
 
-def send_found(requestor, path):
+def send_found(requestor, path, searchreq):
     '''called by node if the file has been found'''
     url="http://"+requestor+":5000/result"
-    values={'path':path}
+    values={'path':path, 'searchreq':pickle.dumps(searchreq)}
+
     data=urllib.urlencode(values)
     req=urllib2.Request(url,data)
     response=urllib2.urlopen(req)

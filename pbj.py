@@ -17,7 +17,7 @@ import threading
 
 import httpcli as http
 
-GATEWAY_ADDR = '10.125.5.249'
+GATEWAY_ADDR = '10.125.5.149'
 TIME_TO_LIVE = 7
 
 class searchReq:
@@ -29,12 +29,14 @@ class searchReq:
         self.searchid=searchid
         self.requestor=requestor
         self.timeinit = time.time()
+        self.lastUltranode = None
 
 class Client:
     '''actual client code for node'''
     def __init__(self, path='share'):
         '''constructor'''
         self.isUltra = None     # boolean
+        self.upId = None
         self.peers = []   # list of connected peers
         self.upeers = []  # list of connected ultrapeers
         self.upeer = None # ultrapeer of node
@@ -66,6 +68,7 @@ class Client:
         if data['isUltra']:
             # node is an ultrapeer
             self.isUltra = True
+            self.upId = data['upId']
             self.upeers = data['uPeers']
             # connect to listed ultrapeers
             if self.upeers is not None:
@@ -96,6 +99,7 @@ class Client:
 
         if data['isUltra']:
             self.isUltra = True
+            self.upId=data['upId']
             if data['uPeers'] is not None:
                 self.upeers = data['uPeers']
             if self.upeers is not None:
@@ -114,27 +118,19 @@ class Client:
         '''
         while True:
             time.sleep(5)
-            print("tick")
             if(self.isUltra):
                 if self.upeers is not None:
-                    print("iterating through upeers")
                     for up in self.upeers:
-                        print("pinging upeer "+up)
                         if(http.send_ping(up) is False):
-                            print("up "+ up + " disconnected")
                             self.upeers.remove(up)
                 if self.peers is not None:
-                    print("iterating through peers " + str(self.peers))
                     for p in self.peers:
-                        print("pinging peer "+p)
                         if(http.send_ping(p) is False):
-                            print("p " + p + " disconnected")
                             self.peers.remove(p)
                             http.send_gateway_remove_peer(p)
                             #update gateway peer count
             else:
                 if(http.send_ping(self.upeer) is False):
-                    print("Lost connection to upeer "+self.upeer+", reconnecting to network.")
                     time.sleep(5)
                     self.reconnect()
 
@@ -152,6 +148,9 @@ class Client:
     def handleSearch(self, req):
         '''gets called by flask, universal (recursive) search function'''
         #requestor is null when requestor=self
+        if(self.isUltra):
+            req.lastUltranode=self.upId
+
         if req.requestor is not None:
             req.ttl = req.ttl-1
 
@@ -183,7 +182,6 @@ class Client:
 
     def addPeer(self, p):
         '''add a peer to an ultra node'''
-        print("adding peer "+ p)
         if self.peers is None:
             self.peers=[p]
         else:
