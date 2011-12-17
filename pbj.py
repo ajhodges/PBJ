@@ -170,12 +170,14 @@ class Client:
         if(self.isUltra):
             if self.peers is not None:
                 for p in self.peers:
-                    http.send_search(req, p)
+                    if p is not req.requestor:
+                        http.send_search(req, p)
             
             if self.upeers is not None:    
                 for up in self.upeers:
-                    #http.send req to connected upeer
-                    http.send_search(req, up)
+                    if up is not req.requestor:
+                        #http.send req to connected upeer
+                        http.send_search(req, up)
         else:
             if self.upeer is not req.requestor:
                 http.send_search(req, self.upeer)
