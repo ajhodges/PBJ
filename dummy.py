@@ -27,11 +27,15 @@ class dummyClass:
 if __name__ == '__main__':
     '''Accept share directory path as an optional argument'''
     if(len(sys.argv)==2):
-        client = Client(str(sys.argv[1]))
+        client = Client(str(sys.argv[1]), '5000')
     else:
+<<<<<<< HEAD
         client = Client()
         dummy = dummyClass()
 
+=======
+        client = Client('share', '5000')
+>>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
     client.connectToNetwork()
     httpserv.run(client, obsDummy=dummy)
 

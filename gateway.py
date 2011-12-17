@@ -16,7 +16,7 @@ import sys
 import math
 import threading
 import time
-import getopt
+import argparse
 
 from flask import Flask
 from flask import request
@@ -27,12 +27,13 @@ PEERS_PER_UPEER = 2
 
 class Node:
     '''gateway representation of a network node'''
-    def __init__(self, name, ultraId):
+    def __init__(self, address, port, ultraId):
         '''constructor 
            name    - IP address of node
+           port    - port of node
            ultraId - ultra peer ID number (-1 if not an ultra peer)
         '''
-        self.name = name
+        self.name = address+":"+port
         if ultraId == -1:
             self.isUltra = False
             self.upeer = None
@@ -53,7 +54,7 @@ class Network:
     def findUPeer(self):
         '''returns the ultra peer with an empty sub network slot or None if all ultra peers are full'''
         for peer in self.upeers.values():
-            if(len(peer.peers.keys()) < PEERS_PER_UPEER):
+            if(len(peer.peers.keys()) < self.ppup):
                 if self.outOfOrder == 0:                 
                     return peer
 
@@ -66,16 +67,17 @@ class Network:
                     up.upeers[curup.name] = curup
                     curup.upeers[up.name] = up
   
-    def addPeer(self, name):
+    def addPeer(self, name, port):
         '''process for adding a peer to the network. Checks network for lost nodes
             before adding new ones
-            name - ip address of new node to be added 
+            name - ip address of new node to be added
+            port - port of new node to be added
         '''
         result = {}
 
         # ping ultrapeers to verify network
         for id,up in self.upeers.items():
-            if send_ping(up.name) == False:
+            if send_ping(up.name up.port) == False:
                 print "Lost Ultrapeer ", id
                 del self.upeers[id]
                 self.outOfOrder += 1
@@ -92,7 +94,7 @@ class Network:
                 self.outOfOrder -= 1
                 for i in range(self.upeerCount):
                     if self.upeers.has_key(i) == False:
-                        newNode = Node(name, i)
+                        newNode = Node(name, port, i)
                         self.upeers[i]= newNode
                         self.linkUPeer(newNode)
                         result['uPeers'] = newNode.upeers.keys()
@@ -100,7 +102,7 @@ class Network:
                         print "Node %s added to network as Ultrapeer %d." % (name, newNode.upeerid)
                         return result
             # put new upeer at end of upeers
-            newNode = Node(name, self.upeerCount)
+            newNode = Node(name, port, self.upeerCount)
             self.upeers[self.upeerCount]= newNode
             self.linkUPeer(newNode)
             result['uPeers'] = newNode.upeers.keys()
@@ -111,7 +113,7 @@ class Network:
             
         else:
             # new peer is not an ultra peer
-            newNode = Node(name, -1)
+            newNode = Node(name, port, -1)
             newNode.upeer = upeer
             upeer.peers[name] = newNode
             result['isUltra'] = False
@@ -131,16 +133,22 @@ pbj = Network()
 @app.route("/register", methods=['GET'])
 def register():
     '''flask method that new nodes use to register with the network'''
-    data=pbj.addPeer(request.remote_addr)
+    data=pbj.addPeer(request.remote_addr, request.args.get('port'))
     return pickle.dumps(data)
     
 @app.route("/upeer_remove_peer", methods=['POST'])
 def updatePeerCount():
     '''flask method that ultranodes use to tell gateway they have lost a node'''
     peer=request.form['peer']
+    port=request.form['peerport']
     upeer=request.remote_addr
-    pbj.UPeerRemovePeer(upeer, peer)
+    pbj.UPeerRemovePeer(upeer, peer, port)
     return "OK"
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Run the gateway server')
+    parser.add_argument('-l', action="store", dest="ppup", default=PEERS_PER_UPEER, help='Set number of peers per ultra peer', type=int)
+    arg_results = parser.parse_args()
+    pbj.ppup = arg_results.ppup
+    
     app.run(host='0.0.0.0', debug=True)    

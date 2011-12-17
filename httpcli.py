@@ -20,7 +20,7 @@ GATEWAY_ADDR = '10.125.5.149'
 
 def send_ping(node):
     '''called by peer to register with ultrapeer'''
-    url="http://"+node+":5000/ping"
+    url="http://"+node+"/ping"
     try:
         req=urllib2.Request(url)
         response=urllib2.urlopen(req)
@@ -29,17 +29,17 @@ def send_ping(node):
         return False
 
 
-def send_register(gateway):
+def send_register(myport, gateway):
     '''called by node to register with gateway, returns pickle obj'''
-    url="http://"+gateway+":5000/register"
+    url="http://"+gateway+":5000/register?port="+myport
     req=urllib2.Request(url)
     response=urllib2.urlopen(req)
     return(response.read())
     
 
-def send_imapeer(upeer):
+def send_imapeer(myport, upeer):
     '''called by peer to register with ultrapeer'''
-    url="http://"+upeer+":5000/imapeer"
+    url="http://"+upeer+"/imapeer?port="+myport
     try:
         req=urllib2.Request(url)
         response=urllib2.urlopen(req)
@@ -48,9 +48,9 @@ def send_imapeer(upeer):
         return False
 
 
-def send_imaupeer(upeer):
+def send_imaupeer(myport, upeer):
     '''called by ultrapeer to register with another ultrapeer'''
-    url="http://"+upeer+":5000/imaupeer"
+    url="http://"+upeer+"/imaupeer?port="+myport
     try:
         req=urllib2.Request(url)
         response=urllib2.urlopen(req)
@@ -61,7 +61,7 @@ def send_imaupeer(upeer):
 
 def send_search(searchreq, superpeerip):
     '''used to initiate/propagate a search request'''
-    url="http://"+superpeerip+":5000/search"
+    url="http://"+superpeerip+"/search"
     values={'searchreq':pickle.dumps(searchreq)}
     
     data=urllib.urlencode(values)
@@ -70,11 +70,18 @@ def send_search(searchreq, superpeerip):
     #print(response.read())
 
 
+<<<<<<< HEAD
 def send_found(requestor, path, searchreq):
     '''called by node if the file has been found'''
     url="http://"+requestor+":5000/result"
     values={'path':path, 'searchreq':pickle.dumps(searchreq)}
 
+=======
+def send_found(port, request):
+    '''called by node if the file has been found'''
+    url="http://"+request.requestor+":"+request.requestorport+"/result"
+    values={'result':pickle.dumps(request), 'port':port}
+>>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
     data=urllib.urlencode(values)
     req=urllib2.Request(url,data)
     response=urllib2.urlopen(req)

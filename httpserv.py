@@ -64,12 +64,19 @@ def result():
     --Client Receive Search Result--
     Ex: curl -d "path=share/wat.txt&search_id=1" http://localhost:5000/result
     '''
+<<<<<<< HEAD
     searchreq=request.form['searchreq']
     searchreq=pickle.loads(str(searchreq))
 
     path=request.form['path']
+=======
+    result = request.form['result']
+    result = pickle.loads(str(result))
+    path = result.path
+    print "%i hops this time." % result.hops
+>>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
     ip=request.remote_addr
-    url="http://"+ip+":5000/share/"+path
+    url="http://"+ip+":"+request.form['port']+"/share/"+path
     #add url/ip to list of results
     
     if(app.window is not None):
@@ -85,7 +92,7 @@ def regPeer():
     --UPeer Notified Of A Peer--
     add request.remote_addr as a connected peer
     '''
-    app.client.addPeer(request.remote_addr)
+    app.client.addPeer(request.remote_addr+":"+request.args.get('port'))
     return "OK!"
     
 
@@ -95,7 +102,7 @@ def regUPeer():
     --UPeer Notified Of Another UPeer--
     add request.remote_addr as a connected upeer
     '''
-    app.client.addUPeer(request.remote_addr)
+    app.client.addUPeer(request.remote_addr + ":"+ request.args.get('port'))
     return "OK!"
 
 
@@ -113,6 +120,10 @@ def run(obsClient, obsWindow=None, obsDummy=None):
     app.logger.addHandler(hdlr)
     app.client=obsClient
     app.window=obsWindow
+<<<<<<< HEAD
     app.dummy=obsDummy
     app.run(host='0.0.0.0')
+=======
+    app.run(host='0.0.0.0', port=obsClient.port)
+>>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
     

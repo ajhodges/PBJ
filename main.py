@@ -18,7 +18,7 @@ import threading
 
 import httpserv
 
-client = Client()
+client = Client('share', '5000')
 
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
@@ -107,11 +107,12 @@ def main():
     app = wx.App(False)
     frame = MainWindow(None, "PBJ")
     client.connectToNetwork()
+
     frame.setStatus("Connected to " + str(client.getUpeers()))
 
     c = runClient(client, frame)
     c.start()
-  
+
     app.MainLoop()
 
 if __name__ == '__main__':

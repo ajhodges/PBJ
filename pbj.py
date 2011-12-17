@@ -17,23 +17,32 @@ import threading
 
 import httpcli as http
 
+<<<<<<< HEAD
 GATEWAY_ADDR = '10.125.5.149'
+=======
+GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
+>>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
 TIME_TO_LIVE = 7
 
 class searchReq:
     '''request for a keyword to be passed between nodes'''
-    def __init__(self, searchid, filename, requestor=None):
+    def __init__(self, searchid, filename, port=None):
         '''constructor'''
         self.ttl = TIME_TO_LIVE
         self.filename = filename
         self.searchid=searchid
-        self.requestor=requestor
+        self.requestor=None
+        self.requestorport=port
         self.timeinit = time.time()
+<<<<<<< HEAD
         self.lastUltranode = None
+=======
+        self.hops = 0
+>>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
 
 class Client:
     '''actual client code for node'''
-    def __init__(self, path='share'):
+    def __init__(self, path='share', port=5000):
         '''constructor'''
         self.isUltra = None     # boolean
         self.upId = None
@@ -43,14 +52,7 @@ class Client:
         self.searchctr = 0
         self.completedSearches = {}
         self.share = path
-
-    def __str__(self):
-        '''tostr function'''
-        if(self.isUltra):
-            string = "Client info:\n  Rank: Ultrapeer\n  Connected ultrapeers: %s\n  Connected peers: %s\n" % (self.upeers, self.peers)
-        else:
-            string = "Client info:\n  Rank: Peer\n  Connected ultrapeer: %s\n" % self.upeer  
-        return string
+        self.port = port
 
     def getUpeers(self):
         '''return connected ultra peers'''
@@ -61,8 +63,8 @@ class Client:
         return upeers
 
     def connectToNetwork(self):
-        '''Establish connectiong with gateway and process result'''
-        data = http.send_register(GATEWAY_ADDR)
+        '''Establish connection with gateway and process result'''
+        data = http.send_register(self.port, GATEWAY_ADDR)
         data = pickle.loads(data)
 
         if data['isUltra']:
@@ -73,16 +75,15 @@ class Client:
             # connect to listed ultrapeers
             if self.upeers is not None:
                 for up in self.upeers:
-                    http.send_imaupeer(up)
+                    http.send_imaupeer(self.port, up)
         else:
             # node is not ultrapeer
             self.isUltra = False
             self.upeer = data['uPeer']
             # connect to listed ultrapeer
-            if http.send_imapeer(self.upeer) is False:
+            if http.send_imapeer(self.port, self.upeer) is False:
                 time.sleep(5)
                 self.reconnect()
-        
         t=threading.Thread(target=self.pingNodes)
         t.start()    
 
@@ -94,7 +95,7 @@ class Client:
         self.upeer = None # ultrapeer of node
         self.searchctr = 0
         self.completedSearches = {}
-        data = http.send_register(GATEWAY_ADDR)
+        data = http.send_register(self.port, GATEWAY_ADDR)
         data = pickle.loads(data)
 
         if data['isUltra']:
@@ -104,19 +105,22 @@ class Client:
                 self.upeers = data['uPeers']
             if self.upeers is not None:
                 for up in self.upeers:
-                    http.send_imaupeer(up)
+                    http.send_imaupeer(self.port, up)
+
         else:
             self.isUltra = False
             self.upeer = data['uPeer']
-            if http.send_imapeer(self.upeer) is False:
+            if http.send_imapeer(self.port, self.upeer) is False:
                 time.sleep(5)
                 self.reconnect()
+
 
     def pingNodes(self):
         '''ping all connected ultra peers and sub peers, removing them if no reply.
             if self is not an ultrapeer, reconnect to gateway if lost ultrapeer
         '''
         while True:
+
             time.sleep(5)
             if(self.isUltra):
                 if self.upeers is not None:
@@ -153,6 +157,7 @@ class Client:
 
         if req.requestor is not None:
             req.ttl = req.ttl-1
+            req.hops = req.hops+1
 
             if(req.requestor not in self.completedSearches):
                 self.completedSearches[req.requestor]=[]
@@ -164,7 +169,8 @@ class Client:
                 
             for foundFile in self.checkForFile(req.filename):
                 #found file
-                http.send_found(req.requestor, foundFile)
+                req.path = foundFile
+                http.send_found(self.port, req)
                 #return
         
         if(self.isUltra):
@@ -196,7 +202,7 @@ class Client:
 
     def search(self, filename):
         '''create search request for filename'''
-        req=searchReq(self.searchctr, filename)
+        req=searchReq(self.searchctr, filename, self.port)
         self.searchctr=self.searchctr+1
         self.handleSearch(req)
 
