@@ -17,11 +17,7 @@ import threading
 
 import httpcli as http
 
-<<<<<<< HEAD
 GATEWAY_ADDR = '10.125.5.149'
-=======
-GATEWAY_ADDR = 'gecko22.cs.clemson.edu'
->>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
 TIME_TO_LIVE = 7
 
 class searchReq:
@@ -34,11 +30,8 @@ class searchReq:
         self.requestor=None
         self.requestorport=port
         self.timeinit = time.time()
-<<<<<<< HEAD
         self.lastUltranode = None
-=======
         self.hops = 0
->>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
 
 class Client:
     '''actual client code for node'''
@@ -162,7 +155,7 @@ class Client:
             if(req.requestor not in self.completedSearches):
                 self.completedSearches[req.requestor]=[]
 
-            if (req.searchid in self.completedSearches[req.requestor]) or req.ttl<=0:
+            if (req.searchid in self.completedSearches[req.requestor]): #or req.ttl<=0:
                 return
 
             self.completedSearches[req.requestor].append(req.searchid)

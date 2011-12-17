@@ -64,17 +64,11 @@ def result():
     --Client Receive Search Result--
     Ex: curl -d "path=share/wat.txt&search_id=1" http://localhost:5000/result
     '''
-<<<<<<< HEAD
-    searchreq=request.form['searchreq']
-    searchreq=pickle.loads(str(searchreq))
 
-    path=request.form['path']
-=======
     result = request.form['result']
     result = pickle.loads(str(result))
     path = result.path
-    print "%i hops this time." % result.hops
->>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
+
     ip=request.remote_addr
     url="http://"+ip+":"+request.form['port']+"/share/"+path
     #add url/ip to list of results
@@ -82,7 +76,7 @@ def result():
     if(app.window is not None):
         app.window.updateResult(url)
     if(app.dummy is not None):
-        app.dummy.updateResult(url, searchreq)
+        app.dummy.updateResult(url, result)
 
     return url
 
@@ -120,10 +114,6 @@ def run(obsClient, obsWindow=None, obsDummy=None):
     app.logger.addHandler(hdlr)
     app.client=obsClient
     app.window=obsWindow
-<<<<<<< HEAD
     app.dummy=obsDummy
-    app.run(host='0.0.0.0')
-=======
-    app.run(host='0.0.0.0', port=obsClient.port)
->>>>>>> 5af39263551bfb04248beba3077370bbe2c50b7c
+    app.run(host='0.0.0.0',port=obsClient.port)
     
