@@ -57,7 +57,14 @@ def send_imaupeer(myport, upeer):
         return True
     except Exception:
         return False
-    
+
+def send_tellsearch(searchterm, peer):
+    url="http://"+peer+"/tellsearch"
+    values={'searchterm':searchterm}
+    data=urllib.urlencode(values)
+    req=urllib2.Request(url,data)
+    response=urllib2.urlopen(req)
+
 
 def send_search(searchreq, superpeerip):
     '''used to initiate/propagate a search request'''

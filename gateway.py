@@ -20,10 +20,10 @@ import argparse
 
 from flask import Flask
 from flask import request
-from httpcli import send_ping
+from httpcli import send_ping, send_tellsearch
 app = Flask(__name__)
 
-PEERS_PER_UPEER = 2
+PEERS_PER_UPEER = 0
 
 class Node:
     '''gateway representation of a network node'''
@@ -77,7 +77,7 @@ class Network:
 
         # ping ultrapeers to verify network
         for id,up in self.upeers.items():
-            if send_ping(up.name up.port) == False:
+            if send_ping(up.name) == False:
                 print "Lost Ultrapeer ", id
                 del self.upeers[id]
                 self.outOfOrder += 1
@@ -88,6 +88,10 @@ class Network:
             # new peer is ultra peer
             result['isUltra'] = True
             self.upeerCount += 1
+
+            if(self.upeerCount>1):
+                print "Telling " + self.upeers[0].name + " to search"
+                send_tellsearch("", self.upeers[0].name)
             
             # adjust ultrapeers
             if  self.outOfOrder != 0:

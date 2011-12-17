@@ -136,10 +136,11 @@ class Client:
         foundFiles = []
         for root, dirs, files in os.walk(self.share):
             for name in files:
-                if name.lower().find(filename.lower()) != -1:
-                    newFile = root + '/' + name
-                    prev,split,post = newFile.partition(self.share+'/')
-                    foundFiles.append(post)
+                if name != "results.csv":
+                    if name.lower().find(filename.lower()) != -1:
+                        newFile = root + '/' + name
+                        prev,split,post = newFile.partition(self.share+'/')
+                        foundFiles.append(post)
         return foundFiles
     
     def handleSearch(self, req):
