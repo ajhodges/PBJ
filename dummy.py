@@ -24,7 +24,7 @@ class dummyClass:
     def updateResult(self, url, searchresult):
         file=open(self.csvfile, "at")
         self.csvwriter=csv.writer(file)
-        self.csvwriter.writerow([searchresult.searchid, searchresult.timeinit, time.time(), searchresult.ttl, searchresult.lastUltranode, url])
+        self.csvwriter.writerow([searchresult.searchid, searchresult.timeinit, time.time(), searchresult.hops, searchresult.lastUltranode, url])
         file.close()
 
 if __name__ == '__main__':
