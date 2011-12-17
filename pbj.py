@@ -149,17 +149,20 @@ class Client:
         if(self.isUltra):
             req.lastUltranode=self.upId
 
+        requestorname=""
         if req.requestor is not None:
             req.ttl = req.ttl-1
             req.hops = req.hops+1
 
-            if(req.requestor not in self.completedSearches):
-                self.completedSearches[req.requestor]=[]
+            requestorname=req.requestor+":"+req.requestorport
 
-            if (req.searchid in self.completedSearches[req.requestor]): #or req.ttl<=0:
+            if(requestorname not in self.completedSearches):
+                self.completedSearches[requestorname]=[]
+
+            if (req.searchid in self.completedSearches[requestorname]): #or req.ttl<=0:
                 return
 
-            self.completedSearches[req.requestor].append(req.searchid)
+            self.completedSearches[requestorname].append(req.searchid)
                 
             for foundFile in self.checkForFile(req.filename):
                 #found file
@@ -170,16 +173,16 @@ class Client:
         if(self.isUltra):
             if self.peers is not None:
                 for p in self.peers:
-                    if p is not req.requestor:
+                    if p != requestorname:
                         http.send_search(req, p)
             
             if self.upeers is not None:    
                 for up in self.upeers:
-                    if up is not req.requestor:
+                    if up != requestorname:
                         #http.send req to connected upeer
                         http.send_search(req, up)
         else:
-            if self.upeer is not req.requestor:
+            if self.upeer != requestorname:
                 http.send_search(req, self.upeer)
 
     def addPeer(self, p):
