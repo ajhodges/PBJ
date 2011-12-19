@@ -1,9 +1,9 @@
-\documentclass[conference]{IEEEtran}
+\documentclass{acm_proc_article-sp}
 
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 \usepackage{xcolor,graphicx}
-
+\usepackage{verbatim} 
 \begin{document}
 %
 % paper title
@@ -13,24 +13,27 @@
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Camden Clements}
-\IEEEauthorblockA{School of Computing\\
-Clemson University\\
-Clemson, SC 29632\\
-Email: camdenc@gmail.com}
-\and
-\IEEEauthorblockN{Adam Hodges}
-\IEEEauthorblockA{School of Computing\\
-Clemson University\\
-Clemson, SC 29632\\
-Email: hodges8@clemson.edu}
-\and
-\IEEEauthorblockN{Zach Welch}
-\IEEEauthorblockA{School of Computing\\
-Clemson University\\
-Clemson, SC 29632\\
-Email: zwelch@clemson.edu}}
-
+\numberofauthors{3}
+\author{
+\alignauthor
+Camden Clements\\
+       \affaddr{School of Computing}\\
+       \affaddr{Clemson University}\\
+       \affaddr{Clemson, SC 29632}\\
+       \email{camdenc@gmail.com}
+\alignauthor
+Adam Hodges\\
+       \affaddr{School of Computing}\\
+       \affaddr{Clemson University}\\
+       \affaddr{Clemson, SC 29632}\\
+       \email{hodges8@clemson.edu}
+\alignauthor
+Zach Welch\\
+       \affaddr{School of Computing}\\
+       \affaddr{Clemson University}\\
+       \affaddr{Clemson, SC 29632}\\
+       \email{zwelch@clemson.edu}
+}
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
 % the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
@@ -59,8 +62,13 @@ Email: zwelch@clemson.edu}}
 
 \begin{abstract}
 \boldmath
-PBJ is a distributed file sharing system designed on many of the same principles of the gnutella file sharing application.  Rather than route search requests through some central entity like Napster and, to a lesser extent, BitTorrent, PBJ creates a network of connected users.  Search requests are broadcast between users and files are downloaded directly between them.  This paper details the algorithms behind PBJ, the specifics of its implementation, and a comparison of PBJ to other popular file sharing systems.  Future improvements to PBJ are also discussed.   
+A common basis of differentiating peer to peer (P2P) file sharing applications is by their degree of reliance on a central server.  Some applications, like Napster, rely completely on a central server for organizing users and searching for files.  This kind of structure simplifies system organization and ensures constant time searching.  It also places the burden of the entire system on the server and server failure leads to a total loss of functionality.  Other applications, like gnutella, have no central node, instead connecting users together and passing search requests between users.  This removes the chance of system failure from loss of a single entity, but complicates the network and makes searching less efficient.    
 
+PBJ (Please Be Jenerous) is a file sharing application designed to marry the positive aspects of the centralized and decentralized paradigms.  PBJ users are connected to each other to form a network of users, and requests are passed among them.  To connect users to the system, PBJ uses a central gateway as a simple, powerful way to control the way the network is built to optimize the network. The PBJ gateway allows for increased network stability and efficiency, and if the gateway should go down, existing users can function without it.
+
+\begin{comment}{
+ PBJ is based on many of the same principles of the gnutella file sharing application.  Rather than route search requests through some central entity like Napster, PBJ creates a network of connected users.  Search requests are broadcast between users and files are downloaded directly between them.  This paper details the algorithms behind PBJ, the specifics of its implementation, and a comparison of PBJ to other popular file sharing systems.  Future improvements to PBJ are also discussed.   
+\end{comment}
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -82,20 +90,29 @@ PBJ is a distributed file sharing system designed on many of the same principles
 %
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
-\IEEEpeerreviewmaketitle
+
 
 
 
 \section{Introduction}
 
-Peer to peer (P2P) file sharing applications are some of the most well known and ubiquitous distributed systems today. These applications allow users of their system to share and download files between each other (usually) free of charge.  In the last fifteen years, file sharing has gone from virtually nonexistent to one of the largest sources of Internet traffic ~\cite{study}.  P2P system structure can vary wildly from highly centralized, in which a single server handles all requests, to highly decentralized, where there are no central elements and the user client programs work together to find results. Beyond basic topology, there are a host of design trade offs.  We were also interested in creating a system that would not be considered liable if illegal content were shared on it. This has been a problem for file sharing applications in the past, particularly Napster. PBJ is a distributed file system that has been designed to be stable, reliable, and able to adapt to changing needs of its users. Due to these design goals, we decided to loosely base the design of PBJ on gnutella, a highly distributed file sharing application. While our overall design is gnutella based, we looked at a range of famous file sharing systems, and several of them influenced our decision making during the design process. 
-\subsection{Background}
+Peer to peer (P2P) file sharing applications are some of the most well known and ubiquitous distributed systems today. These applications allow users of their system to share and download files between each other (usually) free of charge.  In the last fifteen years, file sharing has gone from virtually nonexistent to one of the largest sources of Internet traffic ~\cite{study}.  P2P system structure can vary wildly from highly centralized, in which a single server handles all requests, to highly decentralized, where there are no central elements and the user client programs work together to find results. Beyond basic topology, there are a host of design trade offs.
+We were also interested in creating a system that would not be considered liable if illegal content were shared on it. This has been a problem for file sharing applications in the past, particularly Napster. PBJ is a distributed file system that has been designed to be stable, reliable, and able to adapt to changing needs of its users. Due to these design goals, we decided to loosely base the design of PBJ on gnutella, a highly distributed file sharing application. While our overall design is gnutella based, we looked at a range of famous file sharing systems, and several of them influenced our decision making during the design process. 
 
-\subsubsection{Napster}
-A defining characteristic of a P2P file sharing application is the kind of network topology it employs.  Napster, one of the first file sharing networks, was a highly centralized system.  All  online Napster users connected to a central server.  Each user would have a folder designated for sharing audio files (only mp3s were transferred on Napster).  This central server would handle a user request by searching for related files in the share folders of other users.  The central server would then report a list of relevant files and their locations that the user could choose to download.  Any files the requesting user chose to download would directly connect with the associated machine for actual file transfer. The ability to search for and download music free of charge was very popular and the Napster user base was very large.  It also happened that a large percentage of the downloads on Napster constituted copyright infringement, since users were distributing music without the creator’s consent. From a legal standpoint, the flaw in Napster’s design was that all of the files on the system were indexed on the central server, including files that broke copyright.  This meant that legally, Napster knew about and facilitated copyright infringement.  In 2001, when the inevitable flood of copyright infringement lawsuits were filed against Napster, a court order shut down the central server.  Because it is a central server, the network ceases to exist when it is taken down. File sharing applications developed after Napster’s shut down attempted to avoid legal liability by making their applications less centralized and by not having their computers keep track of individual files.  Napster exists today as a subscription based service ~\cite{napster}
-  \subsubsection{BitTorrent}
- With the dismantling of Napster, file sharing applications started to become more complex and decentralized. Most file sharing today involves the BitTorrent protocol ~\cite{bit}.  BitTorrent differs from other file sharing systems in that it downloads file segments from multiple sources instead of a single file transfer between two users.  BitTorrent works by having a user obtain a torrent file (usually by downloading it from a website).  The local BitTorrent client interprets the contents of the torrent file and connects with a tracker, a server with information about how to find the file. The tracker finds seeders, other BitTorrent clients, with a local copy of the file to be transferred. The file also identifies the swarm, a set of clients with a portion of the file, usually in the process of downloading it themselves.  The searching client downloads from these sources simultaneously to build the desired file.  BitTorrent is especially useful for downloading popular files, since there will be a large pool of seeders and a large swarm.  While BitTorrent is clearly more distributed than Napster, since there are multiple central servers instead of a single large server for the entire application.  However, if the tracker(s) in a torrent file are taken down, there is no way that torrent file can be used to obtain the actual file.        \subsubsection{Gnutella}
-Gnutella (a portmanteau of GNU, the free software project, and Nutella, the chocolate and hazelnut spread) is a decentralized network of interconnected users running a gnutella client called a node.  Search requests are broadcast to all of the searching node’s neighbor clients (which gnutella terms “peers”), which in turn broadcast the request to all of their peers as well ~\cite{lookup}.  This goes on until the file is found or the request goes a specified number of peer hops without finding a file (much like the time to live field in an IP packet). A list of the files that match the search are displayed to the user, who then chooses the file to download. The searching node connects directly to the node with the desired file for file transfer. This hop based searching algorithm does allow for the possibility that a search request may fail to return a file in the network, especially as the network gets larger and larger.  Later versions of gnutella’s network introduced the concept of ultra nodes and ultra peers ~\cite{evo}. Each ultra node is connected to a network of regular nodes as well as a large number of other ultra nodes, each having its own network of nodes, making gnutella a network of networks.  The reason for this change is that it allows many more nodes to be reached from any one node in a smaller number of hops, making searching more efficient and the system more scalable.  Nodes keep track of the other nodes they have previously connected with and attempt to reconnect to the network through these nodes.  When connecting for the first time, these nodes must attempt to connect a set of nodes guaranteed to be in the gnutella network.  This means that despite the highly decentralized nature of gnutella, a few centralized elements remain to facilitate the bootstrapping process.  Unlike Napster, which kept information about files on company machines, gnutella does not keep track of the files transferred on their system.  This means that they are not liable if copyright infringement occurs on their system.         
+\section{Related Work}
+\subsection{Napster}
+A defining characteristic of a P2P file sharing application is the kind of network topology it employs.  Napster, one of the first file sharing networks, was a highly centralized system.  All  online Napster users connected to a central server.  Each user would have a folder designated for sharing audio files (only mp3s were transferred on Napster).  This central server would handle a user request by searching for related files in the share folders of other users.  The central server would then report a list of relevant files and their locations that the user could choose to download.  Any files the requesting user chose to download would directly connect with the associated machine for actual file transfer. Because a given node has only to contact the central server, lookup in Napster can be done in constant time. ~\cite{superpeer}
+
+The ability to search for and download music free of charge was very popular and the Napster user base was very large.  It also happened that a large percentage of the downloads on Napster constituted copyright infringement, since users were distributing music without the creator’s consent. From a legal standpoint, the flaw in Napster’s design was that all of the files on the system were indexed on the central server, including files that broke copyright.  This meant that legally, Napster knew about and facilitated copyright infringement.  In 2001, when the inevitable flood of copyright infringement lawsuits were filed against Napster, a court order shut down the central server.  Because it is a central server, the network ceases to exist when it is taken down. File sharing applications developed after Napster’s shut down attempted to avoid legal liability by making their applications less centralized and by not having their computers keep track of individual files.  Napster exists today as a subscription based service ~\cite{napster}
+\begin{comment}
+  \subsection{BitTorrent}
+ With the dismantling of Napster, file sharing applications started to become more complex and decentralized. Most file sharing today involves the BitTorrent protocol ~\cite{bit}.  BitTorrent differs from other file sharing systems in that it downloads file segments from multiple sources instead of a single file transfer between two users.  BitTorrent works by having a user obtain a torrent file (usually by downloading it from a website).  The local BitTorrent client interprets the contents of the torrent file and connects with a tracker, a server with information about how to find the file. 
+ The tracker finds seeders, other BitTorrent clients, with a local copy of the file to be transferred. The file also identifies the swarm, a set of clients with a portion of the file, usually in the process of downloading it themselves.  The searching client downloads from these sources simultaneously to build the desired file.  BitTorrent is especially useful for downloading popular files, since there will be a large pool of seeders and a large swarm.  While BitTorrent is clearly more distributed than Napster, since there are multiple central servers instead of a single large server for the entire application.  However, if the tracker(s) in a torrent file are taken down, there is no way that torrent file can be used to obtain the actual file.     
+ \end{comment}
+
+ 
+   \subsection{Gnutella}
+Gnutella (a portmanteau of GNU, the free software project, and Nutella, the chocolate and hazelnut spread) is a decentralized network of interconnected users running a gnutella client called a node.  Search requests are broadcast to all of the searching node’s neighbor clients (which gnutella terms “peers”), which in turn broadcast the request to all of their peers as well ~\cite{lookup}. Lookup in gnutella is $O(log n)$ where $n$ is the number of peers in the system.~\cite{super peer} This goes on until the file is found or the request goes a specified number of peer hops without finding a file (much like the time to live field in an IP packet). A list of the files that match the search are displayed to the user, who then chooses the file to download. The searching node connects directly to the node with the desired file for file transfer. This hop based searching algorithm does allow for the possibility that a search request may fail to return a file in the network, especially as the network gets larger and larger.  Later versions of gnutella’s network introduced the concept of ultra nodes and ultra peers ~\cite{evo}. Each ultra node is connected to a network of regular nodes as well as a large number of other ultra nodes, each having its own network of nodes, making gnutella a network of networks.  The reason for this change is that it allows many more nodes to be reached from any one node in a smaller number of hops, making searching more efficient and the system more scalable.    Nodes keep track of the other nodes they have previously connected with and attempt to reconnect to the network through these nodes.  When connecting for the first time, these nodes must attempt to connect a set of nodes guaranteed to be in the gnutella network.  This means that despite the highly decentralized nature of gnutella, a few centralized elements remain to facilitate the bootstrapping process.  Unlike Napster, which kept information about files on company machines, gnutella does not keep track of the files transferred on their system.  This means that they are not liable if copyright infringement occurs on their system.         
 
 \section{Methodology}
 PBJ takes the key qualities of gnutella and uses them only as a starting point, rather than implementing a version of the actual gnutella protocol. Lessons learned from looking at applications like Napster and BitTorrent also played a role in the design of PBJ.  PBJ functions like gnutella in that it creates a network of connected user nodes.  However, it also borrows an important idea from Napster (though slightly altered).  PBJ has a central server running called the gateway.  While Napster kept track of files stored on the system, the gateway keeps track of the nodes in the system and controls the building of the network.  The gateway allows for easy handling of stabilizing the network with nodes being added and removed regularly from the system.  There are three things the PBJ network is designed to handle : building the network, searching the network, and handling node disconnects.  \subsection{Building the Network}
@@ -206,7 +223,7 @@ The authors would like to thank Dr. Goasguen for his help and advice, the Clemso
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}{9}
+\begin{thebibliography}{99}
 
 \bibitem{evo}
 Amir H. Rasti, Daniel Stutzach, Reza Rejaie, "On the Long term Evolution of the Two Tier Gnutella Overlay", in \emph{INFOCOM Proceedings}, Barcelona, Spain, 2006, pp 1 - 6
@@ -224,6 +241,14 @@ Virtualenv Website : http://www.virtualenv.org/en/latest/index.html
 Hari Balakrishnan et al, "Looking Up Data in P2P Systems". \emph{Communications of the ACM}, vol 46, No 3,  February, 2003.
 \bibitem{study}
 Hendrik Schuleze and Klaus Mochalski. "Internet Study 2008/2009". Ipoque Leipzig Germany, 2009
+\bibitem{superpeer}
+Alper Tugay Misrak et al. "Structured Superpeers: Leveraging Heterogeneity to Provide Constant-Time Lookup" . \emph{WIAPP 2003 Proceedings}
+\bibitem{saroiu}
+S. Saroiu, P. Gummadi, S. D. Gribble,  \emph{A Measurement Study of Peer-to-Peer File Sharing Systems}, 
+University of Washington Technical Report UW-CSE-01-06-02, July 2001.
+\bibitem{adar}
+Eytan Adar , Bernardo A. Huberman. " Free Riding on Gnutella". 2000
+
 \end{thebibliography}
 
 
