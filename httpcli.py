@@ -15,7 +15,7 @@ execfile(activate_this, dict(__file__=activate_this))
 import urllib
 import urllib2
 import pickle
-GATEWAY_ADDR = '10.125.5.149'
+GATEWAY_ADDR = '10.125.3.145'
 
 
 def send_ping(node):

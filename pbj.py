@@ -17,7 +17,7 @@ import threading
 
 import httpcli as http
 
-GATEWAY_ADDR = '10.125.5.149'
+GATEWAY_ADDR = '10.125.3.145'
 TIME_TO_LIVE = 7
 
 class searchReq:
