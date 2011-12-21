@@ -160,6 +160,27 @@ We repeated these test cases after every change we made to ensure that PBJ was s
 
 Our testing demonstrated to us the stability of the network. To a large extent, the main goals of the project were met. A network of connected peers could be created using only a simple centralized gateway, while keeping file searching and downloading independent of such a server. We discovered, however, that there was a large amount of traffic on the network between the pinging of peers and redundant searching, even reduced as it is with the unique request ID. We also feel that an explicit ttl will eventually limit PBJÕs scalability. This section provides an in depth look at our test results and possible improvements future versions of our system could implement to deal with these perceived issues.
 
+
+
+
+
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=0.5\textwidth]{searchTime}
+\caption{Search Time to Reach All Nodes in a Network}
+\end{figure}
+
+
+\begin{figure}[tbh]
+\centering
+\includegraphics[width=0.5\textwidth]{hops}
+\caption{Number of Hops to Reach All Nodes in a Network}
+\end{figure}
+
+Our results show that there is a high correlation between network structure and the number of hops required to reach all the nodes on the system.  Looking at the average number of hops to reach every ultra peer in a network, several trends become apparent.  First, every time a ultra peer with an even power of two connects to ultra peer 0, (ultra peers 4, 16, 64, and 256) the average number of hops to traverse the network decreases by approximately one hop.  Once this drop has occurred, as new ultra peers are added to the network, the average number of hops grows at a roughly linear rate to about one more hop on average than the previous peak.  Notice that the slope between peaks is decreasing with an increasing number of nodes.  This implies that as PBJ gets more and more ultra peers, the addition of ultra peers will have less of an impact on average number of hops to find a file.    
+
+The data for the maximum number of hops to traverse the network seems to imply that a pre defined ttl would quickly limit the ability of the network to find files in the system.  Initially, the maximum number of hops is very unstable, with large changes between a few ultra peers.  As ultra peers are added to the network the maximum number of hops needed to reach a node in the network seems to fall into a step function, with long stretches of no change.   
+
 \subsection{Future Work}
 
 \subsubsection{Decentralization}

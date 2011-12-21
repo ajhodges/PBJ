@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  14 DEC 2011 12:23
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  21 DEC 2011 00:45
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -339,39 +339,58 @@ Overfull \hbox (12.0pt too wide) in paragraph at lines 135--136
  [][] 
  []
 
-[3 <./search.png>]
-Overfull \hbox (2.3743pt too wide) in paragraph at lines 166--167
+[3 <./search.png>] <searchTime.png, id=25, 596.9502pt x 364.7226pt>
+File: searchTime.png Graphic file (type png)
+
+<use searchTime.png>
+Package pdftex.def Info: searchTime.png used on input line 169.
+(pdftex.def)             Requested size: 252.0pt x 153.96713pt.
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 169--170
+ [][] 
+ []
+
+<hops.png, id=26, 586.8324pt x 356.532pt>
+File: hops.png Graphic file (type png)
+ <use hops.png>
+Package pdftex.def Info: hops.png used on input line 176.
+(pdftex.def)             Requested size: 252.0pt x 153.09903pt.
+
+Overfull \hbox (12.0pt too wide) in paragraph at lines 176--177
+ [][] 
+ []
+
+[4 <./searchTime.png> <./hops.png>]
+Overfull \hbox (2.3743pt too wide) in paragraph at lines 187--188
 \T1/aer/m/n/9 One im-prove-ment pre-vi-ously dis-cussed is chang-ing how nodes
  []
 
-[4] [5] (./paper.aux)
+[5] [6
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
- 3252 strings out of 493633
- 40682 string characters out of 3143378
- 109388 words of memory out of 3000000
- 6473 multiletter control sequences out of 15000+200000
+ 3262 strings out of 493633
+ 40830 string characters out of 3143378
+ 109392 words of memory out of 3000000
+ 6481 multiletter control sequences out of 15000+200000
  48451 words of font info for 65 fonts, out of 3000000 for 9000
  834 hyphenation exceptions out of 8191
  41i,11n,35p,2174b,254s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/tex
-live/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texli
-ve/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/
-2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/201
-1/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2011/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2011/te
-xmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2011/texmf-dis
-t/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts
-/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw
-/times/utmri8a.pfb>
-Output written on paper.pdf (5 pages, 195501 bytes).
+{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.en
+c}</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb>
+</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></
+usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr
+/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/lo
+cal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/loca
+l/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/
+texlive/2011/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive
+/2011/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2011/t
+exmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2011/texmf-dist/
+fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (6 pages, 333943 bytes).
 PDF statistics:
- 66 PDF objects out of 1000 (max. 8388607)
- 44 compressed objects within 1 object stream
+ 73 PDF objects out of 1000 (max. 8388607)
+ 46 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
