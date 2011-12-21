@@ -171,6 +171,8 @@ Our testing demonstrated to us the stability of the network. To a large extent, 
 \end{figure}
 
 
+The search time results show a positive linear trend with some obvious noise distortion.  Many of the spikes in search time are likely due to network latency.  When ultra node 0 reaches its next connection with ultra node 256, both the average and total search time become much less volitile, likely due to the fact that far fewer hops are now required to reach the highest ultra peers. These numbers represent an idle network where the only messages being passed are search requests from ultra node 0.  In actual use, there would be many messages concurrently, so it is likely that search times would be higher than shown here. Since the majority of this time depends on the latency of the network and the ability of ultra peers to handle large numbers of search requests, an ideal configuration would have the users with the strongest network connections serve as ultra peers.  Several studies have shown that taking advantage of the underlying structure of the physical network can lead to better search times in gnutella ~\cite{Ripeanu}.  A similar approach here would be beneficial.       
+
 \begin{figure}[tbh]
 \centering
 \includegraphics[width=0.5\textwidth]{hops}
@@ -269,6 +271,8 @@ S. Saroiu, P. Gummadi, S. D. Gribble,  \emph{A Measurement Study of Peer-to-Peer
 University of Washington Technical Report UW-CSE-01-06-02, July 2001.
 \bibitem{adar}
 Eytan Adar , Bernardo A. Huberman. " Free Riding on Gnutella". 2000
+\bibitem{Ripeanu}
+Matei Ripeanu, Adriana Iamnitchi, Ian Foster. "Mapping the Gnutella Network". \emph{IEEE Internet Computing}, January-February 2002.  
 
 \end{thebibliography}
 
