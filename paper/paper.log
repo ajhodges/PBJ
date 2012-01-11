@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  9 JAN 2012 23:31
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  10 JAN 2012 21:55
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -363,30 +363,27 @@ Overfull \hbox (12.0pt too wide) in paragraph at lines 216--217
  [][] 
  []
 
-
-Underfull \vbox (badness 1314) has occurred while \output is active []
-
- [4 <./searchTime.png>] [5 <./hops.png>] [6] (./paper.aux) ) 
+[4 <./searchTime.png> <./hops.png>] [5] [6] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
  3263 strings out of 493633
  40839 string characters out of 3143378
- 108396 words of memory out of 3000000
+ 109396 words of memory out of 3000000
  6482 multiletter control sequences out of 15000+200000
  48451 words of font info for 65 fonts, out of 3000000 for 9000
  834 hyphenation exceptions out of 8191
  41i,11n,35p,2175b,254s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive
-/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2011/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2011/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2011/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2011/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2011/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/
-urw/helvetic/uhvb8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/hel
-vetic/uhvr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmb
-8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (6 pages, 338701 bytes).
+{/usr/local/texlive/
+2011/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2011/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2011/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2011/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2011/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2011/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/u
+rw/helvetic/uhvb8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/helv
+etic/uhvr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmb8
+a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on paper.pdf (6 pages, 338649 bytes).
 PDF statistics:
  73 PDF objects out of 1000 (max. 8388607)
  46 compressed objects within 1 object stream
