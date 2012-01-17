@@ -1,0 +1,13 @@
+Testing plan
+
+Collect: 
+number of hops
+time from send
+last ultranode seen
+
+measure avg time/num hops
+measure worst time/num hops
+with different configurations
+
+
+

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  10 JAN 2012 21:55
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  17 JAN 2012 14:19
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -311,82 +311,71 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 
 
 ]
-
-LaTeX Warning: Citation `super peer' on page \thepage  undefined on input line 
-138.
-
-<362prez.png, id=10, 722.7pt x 542.025pt>
+<362prez.png, id=11, 722.7pt x 542.025pt>
 File: 362prez.png Graphic file (type png)
  <use 362prez.png>
-Package pdftex.def Info: 362prez.png used on input line 149.
+Package pdftex.def Info: 362prez.png used on input line 146.
 (pdftex.def)             Requested size: 252.0pt x 189.0003pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 149--150
+Overfull \hbox (12.0pt too wide) in paragraph at lines 146--147
  [][] 
  []
 
-
-Overfull \hbox (2.7343pt too wide) in paragraph at lines 152--153
-\T1/aer/m/n/9 While this alone would be wildly in-ef-fi-cient in terms of searc
-h-
- []
-
-[2 <./362prez.png>] <search.png, id=20, 632.3625pt x 422.57875pt>
+<search.png, id=13, 632.3625pt x 422.57875pt>
 File: search.png Graphic file (type png)
-
-<use search.png>
-Package pdftex.def Info: search.png used on input line 164.
+ <use search.png>
+Package pdftex.def Info: search.png used on input line 161.
 (pdftex.def)             Requested size: 252.0pt x 168.39659pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 164--165
+Overfull \hbox (12.0pt too wide) in paragraph at lines 161--162
  [][] 
  []
 
-[3 <./search.png>] <searchTime.png, id=25, 601.2864pt x 362.7954pt>
+[2 <./362prez.png>] [3 <./search.png>]
+<searchTime.png, id=25, 601.2864pt x 362.7954pt>
 File: searchTime.png Graphic file (type png)
-
-<use searchTime.png>
-Package pdftex.def Info: searchTime.png used on input line 204.
+ <use searchTime.png>
+Package pdftex.def Info: searchTime.png used on input line 199.
 (pdftex.def)             Requested size: 252.0pt x 152.04642pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 204--205
+Overfull \hbox (12.0pt too wide) in paragraph at lines 199--200
  [][] 
  []
 
 <hops.png, id=26, 586.8324pt x 356.532pt>
 File: hops.png Graphic file (type png)
  <use hops.png>
-Package pdftex.def Info: hops.png used on input line 216.
+Package pdftex.def Info: hops.png used on input line 208.
 (pdftex.def)             Requested size: 252.0pt x 153.09903pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 216--217
+Overfull \hbox (12.0pt too wide) in paragraph at lines 208--209
  [][] 
  []
 
-[4 <./searchTime.png> <./hops.png>] [5] [6] (./paper.aux) ) 
+[4 <./searchTime.png> <./hops.png>] [5] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
  3263 strings out of 493633
- 40839 string characters out of 3143378
- 109396 words of memory out of 3000000
- 6482 multiletter control sequences out of 15000+200000
- 48451 words of font info for 65 fonts, out of 3000000 for 9000
+ 40838 string characters out of 3143378
+ 108404 words of memory out of 3000000
+ 6483 multiletter control sequences out of 15000+200000
+ 47315 words of font info for 64 fonts, out of 3000000 for 9000
  834 hyphenation exceptions out of 8191
- 41i,11n,35p,2175b,254s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/
-2011/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2011/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2011/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2011/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2011/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2011/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/u
-rw/helvetic/uhvb8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/helv
-etic/uhvr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmb8
-a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on paper.pdf (6 pages, 338649 bytes).
+ 41i,11n,35p,1853b,254s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2011
+/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2011/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2011/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2011/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2011/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmti9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/h
+elvetic/uhvb8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/helvetic
+/uhvr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmb8a.pf
+b>
+Output written on paper.pdf (5 pages, 321736 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 46 compressed objects within 1 object stream
+ 66 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
