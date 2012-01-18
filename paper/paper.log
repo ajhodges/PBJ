@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  18 JAN 2012 01:39
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  18 JAN 2012 13:39
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -307,137 +307,75 @@ LaTeX Font Info:    Try loading font information for U+lasy on input line 65.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-)
-
-LaTeX Warning: Citation `study' on page \thepage  undefined on input line 115.
-
-
-Overfull \hbox (1.66292pt too wide) in paragraph at lines 119--120
-\T1/aer/m/n/9 some-thing de-vised highly con-nected ul-tra-n-ode graph someth-
- []
-
-
-LaTeX Warning: Citation `nap' on page \thepage  undefined on input line 125.
-
-
-LaTeX Warning: Citation `superpeer' on page \thepage  undefined on input line 1
-25.
-
-
-LaTeX Warning: Citation `napster' on page \thepage  undefined on input line 128
-.
-
-
-LaTeX Warning: Citation `gnut' on page \thepage  undefined on input line 131.
-
-
-LaTeX Warning: Citation `lookup' on page \thepage  undefined on input line 131.
-
-
-
-LaTeX Warning: Citation `superpeer' on page \thepage  undefined on input line 1
-31.
-
-
-LaTeX Warning: Citation `evo' on page \thepage  undefined on input line 131.
-
-[1{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+) [1{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-<362prez.png, id=12, 722.7pt x 542.025pt>
+<362prez.png, id=10, 722.7pt x 542.025pt>
 File: 362prez.png Graphic file (type png)
  <use 362prez.png>
-Package pdftex.def Info: 362prez.png used on input line 144.
+Package pdftex.def Info: 362prez.png used on input line 136.
 (pdftex.def)             Requested size: 252.0pt x 189.0003pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 144--145
+Overfull \hbox (12.0pt too wide) in paragraph at lines 136--137
  [][] 
  []
 
-<search.png, id=14, 632.3625pt x 422.57875pt>
+<search.png, id=12, 632.3625pt x 422.57875pt>
 File: search.png Graphic file (type png)
  <use search.png>
-Package pdftex.def Info: search.png used on input line 159.
+Package pdftex.def Info: search.png used on input line 149.
 (pdftex.def)             Requested size: 252.0pt x 168.39659pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 159--160
+Overfull \hbox (12.0pt too wide) in paragraph at lines 149--150
  [][] 
  []
 
-[2 <./362prez.png>]
-
-LaTeX Warning: Citation `flask' on page \thepage  undefined on input line 174.
-
-
-LaTeX Warning: Citation `virtual' on page \thepage  undefined on input line 175
-.
-
-
-LaTeX Warning: Citation `condor' on page \thepage  undefined on input line 184.
-
-
-
-LaTeX Warning: Citation `palmetto' on page \thepage  undefined on input line 18
-4.
-
-[3 <./search.png>] <searchTime.png, id=25, 601.2864pt x 362.7954pt>
+[2 <./362prez.png>] [3 <./search.png>]
+<searchTime.png, id=25, 601.2864pt x 362.7954pt>
 File: searchTime.png Graphic file (type png)
-
-<use searchTime.png>
-Package pdftex.def Info: searchTime.png used on input line 197.
+ <use searchTime.png>
+Package pdftex.def Info: searchTime.png used on input line 179.
 (pdftex.def)             Requested size: 252.0pt x 152.04642pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 197--198
+Overfull \hbox (12.0pt too wide) in paragraph at lines 179--180
  [][] 
  []
-
-
-LaTeX Warning: Citation `Ripeanu' on page \thepage  undefined on input line 201
-.
 
 <hops.png, id=26, 586.8324pt x 356.532pt>
 File: hops.png Graphic file (type png)
  <use hops.png>
-Package pdftex.def Info: hops.png used on input line 206.
+Package pdftex.def Info: hops.png used on input line 194.
 (pdftex.def)             Requested size: 252.0pt x 153.09903pt.
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 206--207
+Overfull \hbox (12.0pt too wide) in paragraph at lines 194--195
  [][] 
  []
 
-
-Underfull \vbox (badness 2368) has occurred while \output is active []
-
- [4 <./searchTime.png> <./hops.png>] [5] [6
-
-] (./paper.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+[4 <./searchTime.png> <./hops.png>] [5] (./paper.aux) ) 
 Here is how much of TeX's memory you used:
  3265 strings out of 493633
  40849 string characters out of 3143378
- 109357 words of memory out of 3000000
+ 108412 words of memory out of 3000000
  6485 multiletter control sequences out of 15000+200000
  47315 words of font info for 64 fonts, out of 3000000 for 9000
  834 hyphenation exceptions out of 8191
- 41i,11n,35p,1868b,254s stack positions out of 5000i,500n,10000p,200000b,50000s
-{/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/tex
-live/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texli
-ve/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/
-2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/201
-1/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2011/
-texmf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2011/te
-xmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2011/texmf-dis
-t/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts
-/type1/urw/times/utmb8a.pfb>
-Output written on paper.pdf (6 pages, 322644 bytes).
+ 41i,11n,35p,1865b,254s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/local/texlive/2011
+/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texlive/2011/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2011/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2011/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2011/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmti9.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/h
+elvetic/uhvb8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/helvetic
+/uhvr8a.pfb></usr/local/texlive/2011/texmf-dist/fonts/type1/urw/times/utmb8a.pf
+b>
+Output written on paper.pdf (5 pages, 321102 bytes).
 PDF statistics:
- 69 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+ 66 PDF objects out of 1000 (max. 8388607)
+ 41 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
